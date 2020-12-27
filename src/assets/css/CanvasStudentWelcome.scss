@@ -1,0 +1,13 @@
+.sw-header {
+  background: url('https://orrery-media.s3.amazonaws.com/attr/2018-12/student_dashboard_bg_dcm.png') no-repeat top right;
+  background-size: cover;
+  overflow: auto;
+}
+
+.sw-header-text {
+  margin: $base;
+  padding: $base;
+  background-color: $blue;
+  color: #fff;
+  width: 50%;
+}
