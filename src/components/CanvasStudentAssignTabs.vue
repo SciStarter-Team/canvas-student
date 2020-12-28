@@ -4,19 +4,19 @@
     <!-- TAB NAVIGATION -->
     <ul class="canvas-tab-nav" role="tablist"  aria-label="Tabs" ref="tabs">
         <li><a @click.prevent="selectTab(0)" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1" tabindex="0" href="#panel-1" class="selected">
-            <div class="ss-tab-icon"><img src="../assets/img/canvas/pointing-hand.svg" alt="pointing hand icon" /></div>
+            <div class="ss-tab-icon"><img src="../assets/img/canvas/robot-head.svg" alt="SciStarter icon" /></div>
             <div class="ss-tab-text">
-                <span>Getting Started</span>
+                <span>Get Started</span>
             </div>
         </a></li>
         <li><a @click.prevent="selectTab(1)" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2" tabindex="-1" href="#panel-2">
-          <div class="ss-tab-icon"><img src="../assets/img/canvas/screwdriver.svg" alt="screwdriver icon" /></div>
+          <div class="ss-tab-icon"><img src="../assets/img/canvas/view-project.svg" alt="television icon" /></div>
           <div class="ss-tab-text">
               <span>About the project</span>
           </div>
         </a></li>
         <li><a @click.prevent="selectTab(2)" role="tab" aria-selected="false" aria-controls="panel-3" id="tab-3" tabindex="-1" href="#panel-3">
-          <div class="ss-tab-icon"><img src="../assets/img/canvas/paper.svg" alt="paper icon" /></div>
+          <div class="ss-tab-icon"><img src="../assets/img/canvas/do-project.svg" alt="paper icon" /></div>
           <div class="ss-tab-text">
             <span>Do the Project</span>
           </div>
