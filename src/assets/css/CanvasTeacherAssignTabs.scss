@@ -56,6 +56,12 @@
   }
 }
 
+.canvas-tab-nav.ctab-two {
+  li {
+    flex-basis: 50%;
+  }
+}
+
 .canvas-panel {
   outline: none;
   padding: 1rem;

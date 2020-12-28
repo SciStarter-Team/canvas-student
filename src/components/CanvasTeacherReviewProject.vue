@@ -1,8 +1,15 @@
 <template>
   <div class="canvas-project-details">
+
+      <div class="flex flex-jc-fe m-0-0-base">
+          <a @click="cancelAssignment">cancel assignment</a>
+      </div>
+
     <template>
 
     <div id="project-details">
+
+
 
       <div class="flex">
         <div class="flex flex-center-both project-name">
@@ -42,13 +49,10 @@
       <div class="flex flex-jc-sb flex-reverse project-details">
 
         <div class="flex-col">
-          <div class="frame p-base">
-            <h3 class="color-p fs-base serif w-700 m-0-0-s4">Description</h3>
 
-                <vue-markdown :source="project.description || project.project.description"></vue-markdown>
 
-          </div>
 
+          <!-- DETAILS TABLE -->
           <div class="frame p-base">
             <h3 class="color-p fs-base serif w-700 m-0-0-s4">Project Details</h3>
             <table class="canvas-table">
@@ -74,6 +78,24 @@
           </table>
           </div>
 
+          <!-- DESCRIPTION -->
+          <div class="frame p-base">
+            <h3 class="color-p fs-base serif w-700 m-0-0-s4">Description</h3>
+                <vue-markdown :source="project.description || project.project.description"></vue-markdown>
+          </div>
+
+          <!-- RESOURCES FOR TEACHERS -->
+          <div v-if="project.resource_1 && project.resource_1.url !== ''" class="frame p-base">
+            <h3 class="color-p fs-base serif w-700 m-0-0-s4">Additional Resources for Teachers</h3>
+            <ul class="standard">
+              <li><a :href="project.resource_1.url" target="_blank">{{project.resource_1.name || project.resource_1.url}}</a></li>
+              <li v-if="project.resource_2.url"><a :href="project.resource_2.url" target="_blank">{{project.resource_2.name || project.resource_2.url}}</a></li>
+              <li v-if="project.resource_3.url"><a :href="project.resource_3.url" target="_blank">{{project.resource_3.name || project.resource_3.url}}</a></li>
+              <li v-if="project.resource_4.url"><a :href="project.resource_4.url" target="_blank">{{project.resource_4.name || project.resource_4.url}}</a></li>
+            </ul>
+          </div>
+
+          <!-- RESOURCES FOR STUDENTS -->
           <div v-if="project.student_resource_1 && project.student_resource_1.url !== ''" class="frame p-base">
             <h3 class="color-p fs-base serif w-700 m-0-0-s4">Additional Resources for Students</h3>
             <ul class="standard">
@@ -83,15 +105,18 @@
               <li v-if="!!project.student_resource_4.url"><a :href="project.student_resource_4.url" target="_blank">{{project.student_resource_4.name || project.student_resource_4.url}}</a></li>
             </ul>
           </div>
+
         </div><!-- end .flex-col -->
 
         <div class="flex-col">
 
+          <!-- TIME REQUIRED -->
           <div class="frame p-base div1">
             <h3 class="color-p fs-base serif w-700 m-0-0-s4">Time Required</h3>
             <p class="serif fs-b1 color-b">{{project.time_required || project.project.time }}</p>
           </div>
 
+          <!-- MATERIALS NEEDED -->
           <div class="frame p-base div2">
             <h3 class="color-p fs-base serif w-700 m-0-0-s4">Materials Needed</h3>
 
@@ -103,31 +128,78 @@
               <template v-if="project.project.type == 'CustomProject'">
                 <p>{{project.project.materials}}</p>
               </template>
-
           </div>
+
+          <!-- IF AFFILIATE WHERE STUDENT HAS TO ENTER DATA -->
+          <div v-if="!project.project.form && project.project.type == 'Project'" class="frame p-base message">
+            <h3 class="color-p fs-base serif w-700 m-0-0-s4">Note for Educators</h3>
+              <p>This project is not hosted on SciStarter.org. Students will need to create a project account during the assignment to log data and to receive credit for their participation. Or, for students 13 and under, you can create a project account and log data as a class to complete the assignment. Select "Students will submit data to teacher, Teacher will submit data to the project (suggested for younger students)" when assigning project to log data on behalf of your class.</p>
+          </div>
+
         </div><!-- end .flex-col -->
 
 
-      </div><!-- end .grid -->
+      </div><!-- end .flex -->
 
       <div class="frame p-base m-0-basehalf">
           <h3 class="color-p fs-base serif w-700 m-0-0-s4">Project Instructions</h3>
+
           <ol class="instructions">
             <template v-if="project.project.type == 'Project'">
               <li v-for="(step, index) in project.instruction_steps_active" :key="'step' + index">{{step}}</li>
             </template>
             <template v-if="project.project.type == 'CustomProject'">
-              <div class="m-0-0-base">
               <vue-markdown :source="project.project.steps"></vue-markdown>
-            </div>
+              <!-- <li v-for="(step, index) in project.project.steps" :key="'step' + index">{{step}}</li> -->
             </template>
         </ol>
-
-        <a @click="triggerDoProjectTab" class="cbtn-primary">Do Project!</a>
-
       </div>
 
+      <template v-if="project.project.type == 'CustomProject' && project.project.notes">
+          <div class="frame p-base m-base-basehalf">
+              <h3 class="color-p fs-base serif w-700 m-0-0-base">Notes from the Project Creator</h3>
+              <vue-markdown :source="project.project.notes"></vue-markdown>
+          </div>
+      </template>
 
+      <template v-if="project.project.type == 'CustomProject'">
+        <div class="frame p-base m-base-basehalf">
+          <h3 class="color-p fs-base serif w-700 m-0-0-base">Project Questions</h3>
+          <CustomForm :fields="worksheet"  />
+        </div>
+      </template>
+
+      <template v-if="project.project.type == 'Project'">
+        <div class="frame p-base m-base-basehalf">
+          <div class="flex flex-jc-sb">
+            <h3 class="color-p fs-base serif w-700 m-0-0-s4">Project Worksheet</h3>
+            <a @click="printWorksheet" class="print"><img src="../assets/img/canvas/print.svg" alt="print icon" /> print worksheet</a>
+          </div>
+          <p class=" m-0-0-lg">This is the form students will fill out and submit to you</p>
+
+          <div v-for="(item,i) in worksheet" class="customFormQuestion" :key="'q'+i">
+              <h4 class="label" :class="{'heading':item.type=='heading'}">{{item.prompt}}</h4>
+              <small v-if="item.extra">{{item.extra}}</small>
+
+              <input v-if="item.type=='short-text'" type="text" disabled />
+              <textarea v-else-if="item.type=='long-text'" disabled></textarea>
+
+              <el-radio-group v-else-if="item.type==='true-false'">
+                  <el-radio :value="true" disabled>Yes</el-radio>
+                  <el-radio :value="false" disabled>No</el-radio>
+              </el-radio-group>
+
+              <el-select v-else-if="item.type==='select-one' && item.options" placeholder="Select One">
+                  <el-option v-for="o in item.options" :key="o" :value="o" :label="o"></el-option>
+              </el-select>
+
+
+
+
+          </div>
+
+        </div>
+      </template>
 
     </div><!-- end #project-details -->
 
@@ -140,26 +212,47 @@
 </template>
 
 <script>
+//*******REMOVE FOR PROD *********
+import store from '../store.js'
+//********************************
 import VueMarkdown from 'vue-markdown'
+import CustomForm from '../components/CanvasCustomForm'
 export default {
-  name: 'StudentViewProject',
+  name: 'ViewProject',
+  components: {
+      VueMarkdown,
+      CustomForm
+  },
   props: ['project'],
   data: function(){
     return {
-      questions: null
+
     }
   },
-  components: {
-      VueMarkdown
-  },
   methods: {
+
     scrollToTop(){
       window.scrollTo(0,0)
     },
-    triggerDoProjectTab(){
-      this.$emit('triggerTab',2);
-    }
+    createWorksheetOptions(){
+      this.worksheet.map(function(d){
+        if (d.type==='select-one' && d.extra !== ''){
+          d.options = d.extra.split(',')
+        }
+        return d;
+      })
+    },
+    printWorksheet(){
 
+    },
+    cancelAssignment(){
+     let c = confirm("The project will be cancelled. Press OK to remove this project.")
+     if (c) {
+       // do all the logic to cancel assignment
+       // load the other module here??? the one that is usually in the external tool?
+       window.location.href = 'http://kevinripka.com/iframe'
+     }
+   }
   },
   computed: {
     topics(){
@@ -175,27 +268,40 @@ export default {
         act.push(d.label)
       })
       return act.join(', ')
+    },
+    worksheet: function(){
+      if (this.project.project.type == 'CustomProject') {
+        return JSON.parse(this.project.project.json)
+      } else {
+        return store.worksheet
+      }
     }
 
   },
   mounted(){
     this.scrollToTop()
-
+    if (this.project.project.type == 'CustomProject') {
+      this.questions = JSON.parse(this.project.project.json)
+    }
+    if (this.project.project.type == 'Project') {
+      this.createWorksheetOptions()
+    }
 
   },
   created(){
     let ctx = this
-
     // filter videos so no nulls
     ctx.project.intro_video_urls_filtered = [];
-    ctx.project.intro_video_urls.forEach(function(v){
-      if(v){ctx.project.intro_video_urls_filtered.push(v)}
-    })
+    if (ctx.project.intro_video_urls) {
+      ctx.project.intro_video_urls.forEach(function(v){
+        if(v){ctx.project.intro_video_urls_filtered.push(v)}
+      })
+    }
+
   }
 }
 </script>
 
 <style lang="scss">
-@import '../assets/css/CanvasVariables.scss';
-@import '../assets/css/CanvasProject.scss';
+
 </style>

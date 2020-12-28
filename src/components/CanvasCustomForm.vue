@@ -1,7 +1,7 @@
 <template>
-  <form class="canvas-custom-form frame width-80 p-base m-center" @submit="submitWorksheet">
-    <h2 class="color-p fs-b2 serif w-700 m-0-0-s4 width-80 m-center" style="margin-bottom:2rem;">Worksheet</h2>
-    <div class="customFormQuestion" v-for="(item,i) in worksheet" :key="'q' + i">
+  <div class="canvas-custom-form frame width-80 p-base m-center">
+
+    <div class="customFormQuestion" v-for="(item,i) in fields" :key="'q' + i">
         <p class="label">{{item.prompt}}</p>
 
         <!-- ******* RADIOS ************ -->
@@ -38,20 +38,21 @@
         </div>
 
         <!-- ******* ADD PHOTO ************ -->
-        <div v-else-if="item.type === 'file'">
+        <div v-else-if="item.fieldType === 'file'">
           <p>Student will upload photo.</p>
         </div>
 
-    </div>
-      <button class="cbtn-primary cbtn-large">Submit</button>
 
-  </form>
+
+    </div>
+
+  </div>
 </template>
 
 <script>
 export default {
   name: 'CustomForm',
-  props: ['worksheet'],
+  props: ['fields'],
   data: function(){
     return {
     }

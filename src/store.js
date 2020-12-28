@@ -42321,5 +42321,49 @@ documents: [
   {name: 'GSAP workbook', url: ''},
   {name: 'Some other pdf', url: ''},
 ],
-worksheet: [{"id": 1599795844749.2075, "prompt": "Add a caption to your Stream Selfie: (what is the photo showing?)", "type": "short-text", "extra": ""}, {"id": 1599795863391.901, "prompt": "", "type": "", "extra": ""}, {"id": 1599795871955.87, "prompt": "Where is this stream?", "type": "long-text", "extra": ""}, {"id": 1599795902666.6318, "prompt": "What is the name for this stream?", "type": "select-one", "extra": "Enter the name below, I don't know the name of this stream (or it doesn't have a name)"}, {"id": 1599795981673.7212, "prompt": "The name of the stream", "type": "short-text", "extra": ""}, {"id": 1599796017216.4026, "prompt": "Can you see your observation site on this map?(when uploading photo on SciStarter)", "type": "true-false", "extra": ""}, {"id": 1599796086032.5222, "prompt": "Based on the available information, this is your observation site's point on the map. If it's not correct, you can click to move the marker to the correct spot.", "type": "heading", "extra": ""}, {"id": 1599796136688.7527, "prompt": "More about this stream", "type": "select-one", "extra": "Land Ownership, Public, Private, Don\u2019t know"}, {"id": 1599796189249.035, "prompt": "Trash present in or near the stream?", "type": "select-one", "extra": "None, Minimal, Moderate, Lots!"}, {"id": 1599796232517.2644, "prompt": "Is this an existing site you monitor?", "type": "select-one", "extra": "Yes, No, N/A"}, {"id": 1599796250353.7395, "prompt": "Are you doing this as part of an organization or chapter?", "type": "true-false", "extra": ""}, {"id": 1599796275325.852, "prompt": "This stream matters to me because...", "type": "long-text", "extra": ""}, {"id": 1600138412359.4763, "prompt": "Reflection Questions", "type": "heading", "extra": ""}, {"id": 1600138423559.0042, "prompt": "Describe how the data you collected during this project will help contribute to the scientist's research question or goal.", "type": "long-text", "extra": ""}, {"id": 1600138439685.7407, "prompt": "How do you think the data you collected could benefit someone you know personally in your family and/or community?", "type": "long-text", "extra": ""}, {"id": 1600138451270.6755, "prompt": "Explain two things that you learned from participating in this research project.", "type": "long-text", "extra": ""}, {"id": 1600138459575.9185, "prompt": "What would you do differently next time if you participated in this same project again or joined another research project?", "type": "long-text", "extra": ""}, {"id": 1600138469391.7012, "prompt": "After participating in this project, what other citizen science project would you be interested in joining and why?", "type": "long-text", "extra": ""}]
+worksheet: [{"id": 1599795844749.2075, "prompt": "Add a caption to your Stream Selfie: (what is the photo showing?)", "type": "short-text", "extra": ""}, {"id": 1599795863391.901, "prompt": "", "type": "", "extra": ""}, {"id": 1599795871955.87, "prompt": "Where is this stream?", "type": "long-text", "extra": ""}, {"id": 1599795902666.6318, "prompt": "What is the name for this stream?", "type": "select-one", "extra": "Enter the name below, I don't know the name of this stream (or it doesn't have a name)"}, {"id": 1599795981673.7212, "prompt": "The name of the stream", "type": "short-text", "extra": ""}, {"id": 1599796017216.4026, "prompt": "Can you see your observation site on this map?(when uploading photo on SciStarter)", "type": "true-false", "extra": ""}, {"id": 1599796086032.5222, "prompt": "Based on the available information, this is your observation site's point on the map. If it's not correct, you can click to move the marker to the correct spot.", "type": "heading", "extra": ""}, {"id": 1599796136688.7527, "prompt": "More about this stream", "type": "select-one", "extra": "Land Ownership, Public, Private, Don\u2019t know"}, {"id": 1599796189249.035, "prompt": "Trash present in or near the stream?", "type": "select-one", "extra": "None, Minimal, Moderate, Lots!"}, {"id": 1599796232517.2644, "prompt": "Is this an existing site you monitor?", "type": "select-one", "extra": "Yes, No, N/A"}, {"id": 1599796250353.7395, "prompt": "Are you doing this as part of an organization or chapter?", "type": "true-false", "extra": ""}, {"id": 1599796275325.852, "prompt": "This stream matters to me because...", "type": "long-text", "extra": ""}, {"id": 1600138412359.4763, "prompt": "Reflection Questions", "type": "heading", "extra": ""}, {"id": 1600138423559.0042, "prompt": "Describe how the data you collected during this project will help contribute to the scientist's research question or goal.", "type": "long-text", "extra": ""}, {"id": 1600138439685.7407, "prompt": "How do you think the data you collected could benefit someone you know personally in your family and/or community?", "type": "long-text", "extra": ""}, {"id": 1600138451270.6755, "prompt": "Explain two things that you learned from participating in this research project.", "type": "long-text", "extra": ""}, {"id": 1600138459575.9185, "prompt": "What would you do differently next time if you participated in this same project again or joined another research project?", "type": "long-text", "extra": ""}, {"id": 1600138469391.7012, "prompt": "After participating in this project, what other citizen science project would you be interested in joining and why?", "type": "long-text", "extra": ""}],
+
+assignment_submission: { // this is a single submission object that you should get in the context of 'student' unless you just want to feed all the submissions
+  student_id: 9,
+  student_email: 'ChuckNorris@broward.edu',
+  answers: [
+      {prompt: "What is your favorite snail?",
+        type: 'short-text',
+        answer: 'Stenotrema hubrichti'
+    },
+    {prompt: "Tell me something latin",
+      type: 'long-text',
+      answer: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vulputate lacus id rutrum consequat. Nunc sed eros nec ex tempus fermentum. In hac habitasse platea dictumst. Cras lacinia varius ligula, sit amet bibendum dolor finibus ut. Nullam aliquam lobortis libero, id maximus ante eleifend eget. Nulla tempus, nunc vitae facilisis tempus, ante massa sodales ante, in vulputate mi purus commodo nisi. Quisque dolor diam, porta vel consectetur eu, tempor mattis lectus.'
+  },
+  {prompt: "True or false: this is awesome",
+    type: 'true-false',
+    answer: "true"
+  },
+  {prompt: "Select one of the best things",
+    type: 'select-one',
+    answer: "Star Wars"
+  },
+  {prompt: "Give us a date",
+    type: 'date',
+    answer: "November 14, 1976"
+  },
+  {prompt: "How many times have you watched Saved by the Bell?",
+    type: 'number',
+    answer: "999"
+  }
+  ,
+  {prompt: "Which snails did you find?",
+    type: 'select-many',
+    answer: ['Zonites arboreus','Inflectarius inflectus'],
+    options: ['Punctum munitissimum','Zonites arboreus','Inflectarius inflectus', 'Hawaiia miniscula']
+  },
+  {prompt: "Take a picture of a bear",
+    type: 'file',
+    answer: 'https://placebear.com/g/500/300',
+  }
+]
+
+
+  }
+
 }

@@ -1,19 +1,32 @@
 <template>
   <div class="student-do-project canvas-style">
 
+
+
     <!-- project hosted on SciStarter e.g. Stream Selfie, Project Squirrel -->
     <template v-if="project.project.form && project.project.type == 'Project'">
-        <Worksheet :worksheet="worksheet" v-on="$listeners" />
+        <Worksheet :worksheet="worksheet" :project="project" v-on="$listeners" />
     </template>
+
 
     <!-- project NOT hosted on SciStarter e.g. Stall Catchers -->
     <template v-else-if="!project.project.form  && project.project.type == 'Project'">
 
+        <!-- Teacher submits data so student does not need to go to project? -->
+        <template v-if="assignment_settings.submitted_by === 'teacher'">
+          <p>Your teacher will lead you through the project!</p>
+
+          <div class="m-b4-0 p-b2-0" style="border-top:2px solid #9f9f9f">
+              <Worksheet :worksheet="worksheet" :project="project" v-on="$listeners" />
+          </div>
+        </template><!-- END Teacher submits data so student does not need to go to project? -->
+
+
+
         <!-- The student does not have an account in SciStarter already -->
-        <template v-if="!user.hasAccount">
+        <template v-else-if="assignment_settings.submitted_by === 'student' && !user.hasAccount">
 
           <!-- Before creating account -->
-
           <template v-if="!accountCreated">
             <div class="p-base">
               <h2 class="color-p fs-base serif w-700 m-0-0-s4">Instructions</h2>
@@ -32,33 +45,35 @@
                   <button type="submit" class="cbtn-primary">submit</button>
               </form>
             </div>
-          </template>
+          </template><!-- END Before creating account -->
 
           <!-- After creating account -->
           <template v-else>
               <div class="p-base">
 
                 <div>
-                  <h2 class="color-p fs-b2 serif w-700 m-0-0-s4">Go to the Project Website</h2>
-                  <p class="fs-b1 m-base-0-b4"><a class="cbtn-primary" :href="project.project.url"><b>{{project.project.name}} website &raquo;</b></a></p>
+                  <h2 class="color-p fs-b2 serif w-700 m-0-0-base">Go to the Project Website</h2>
+
                   <ol class="instructions">
-                    <li>Create an account with your same school email addressif you haven't already.</li>
-                    <li v-if="assignment.contributions">Your teacher wants you to do the project {{assignment.contributions}} time<template v-if="assignment.contributions > 1">s</template>.</li>
+                    <li v-if="assignment.contributions">Your teacher wants you to do the project {{assignment.contributions}} time<template v-if="assignment.contributions > 1">s</template>.
+                      <p><i>Remember to create an account with your same school email address if you haven't already.</i></p>
+                      <p class="fs-b1 m-base-0-b4"><a class="cbtn-primary" target="_blank" :href="project.project.url"><b>{{project.project.name}} website &raquo;</b></a></p>
+                    </li>
                     <li v-else>Participate in the project.</li>
-                    <li>Fill out the worksheet below.</li>
+                    <li>Come back to this page and fill out the worksheet below.</li>
                   </ol>
                 </div>
 
                 <div class="m-b4-0 p-b2-0" style="border-top:2px solid #9f9f9f">
-                    <Worksheet :worksheet="worksheet" v-on="$listeners" />
+                    <Worksheet :worksheet="worksheet" :project="project" v-on="$listeners" />
                 </div>
 
 
               </div>
-          </template>
+          </template><!-- END After creating account -->
 
 
-        </template>
+        </template> <!-- END The student does not have an account in SciStarter already -->
 
         <!-- The student has an account -->
         <div v-else class="p-base">
@@ -74,11 +89,11 @@
         </div>
 
 
-    </template>
+    </template><!-- END project NOT hosted on SciStarter e.g. Stall Catchers -->
 
     <!-- Custom Project -->
     <template v-else-if="project.project.type == 'CustomProject'">
-      <Worksheet :worksheet="worksheet" v-on="$listeners" />
+      <Worksheet :worksheet="worksheet" :project="project" v-on="$listeners" />
     </template>
 
 
@@ -94,7 +109,7 @@ export default {
   components: {
     Worksheet
   },
-  props: ['project','user','organization'],
+  props: ['project','user','organization','assignment_settings'],
   data: function(){
     return {
       accountCreated: false, // set to true on account creation

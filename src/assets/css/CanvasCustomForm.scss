@@ -49,3 +49,30 @@
   }
 
 }
+
+.is_submission {
+  .el-radio.is-disabled.is-checked  span.el-radio__label {
+      color: $orange!important;
+      font-weight: bold;
+  }
+  .el-radio.is-disabled.is-checked .el-radio__input.is-disabled.is-checked .el-radio__inner {
+    background-color: $orange;
+    border-color: $orange;
+    &::after {
+        background-color: #F5F7FA;
+    }
+  }
+  .el-checkbox.is-disabled.is-checked {
+    .el-checkbox__inner {
+      background-color: $orange;
+      border-color: $orange;
+    }
+    .el-checkbox__label {
+      color: $orange;
+      font-weight: bold;
+    }
+  }
+  .answer-img {
+    max-width:100%;
+  }
+}
