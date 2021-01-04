@@ -2,11 +2,11 @@
   <div class="teacher-view">
 
     <template v-if="teacher_context==='student'">
-        <TeacherGradeSubmission :user="user" :organization="organization" :project="project" :teacher_context="teacher_context" />
+        <TeacherGradeSubmission :user="user" :organization="organization" :project="project" :teacher_context="teacher_context" :direct="direct"/>
     </template>
 
     <template v-else>
-      <TeacherAssignTabs :user="user" :organization="organization" :project="project" :teacher_context="teacher_context" />
+      <TeacherAssignTabs :user="user" :organization="organization" :project="project" :teacher_context="teacher_context" :direct="direct"/>
     </template>
 
   </div>
@@ -21,7 +21,7 @@ export default {
     TeacherAssignTabs,
     TeacherGradeSubmission
   },
-  props: ['user','organization','project','teacher_context']
+  props: ['user','organization','project','teacher_context', 'direct']
 }
 </script>
 

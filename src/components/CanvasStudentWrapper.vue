@@ -1,8 +1,8 @@
 <template>
   <div class="student-assign student content-wrapper">
 
-      <StudentCompletedProject v-if="completed" :project="project" :user="user" :organization="organization" />
-      <StudentAssignmentTabs v-else :project="project" :user="user" :organization="organization" :assignment_settings="assignment_settings" @worksheetCompleted="showThankYou" />
+      <StudentCompletedProject v-if="completed" :project="project" :user="user" :organization="organization" :direct="direct"/>
+      <StudentAssignmentTabs v-else :project="project" :user="user" :organization="organization" :assignment_settings="assignment_settings" @worksheetCompleted="showThankYou" :direct="direct"/>
 
   </div>
 </template>
@@ -16,10 +16,10 @@ export default {
     StudentCompletedProject,
     StudentAssignmentTabs
   },
-  props: ['project','user','organization','assignment_settings'],
+  props: ['project','user','organization','assignment_settings', 'direct'],
   data: function(){
     return {
-      completed: false // the student has completed the project
+      completed: !!this.user.assignment_done
     }
   },
   methods: {

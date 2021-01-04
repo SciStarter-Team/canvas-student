@@ -5,7 +5,7 @@
 
     <!-- project hosted on SciStarter e.g. Stream Selfie, Project Squirrel -->
     <template v-if="project.project.form && project.project.type == 'Project'">
-        <Worksheet :worksheet="worksheet" :project="project" v-on="$listeners" />
+        <Worksheet :user="user" :worksheet="worksheet" :project="project" v-on="$listeners" />
     </template>
 
 
@@ -17,7 +17,7 @@
           <p>Your teacher will lead you through the project!</p>
 
           <div class="m-b4-0 p-b2-0" style="border-top:2px solid #9f9f9f">
-              <Worksheet :worksheet="worksheet" :project="project" v-on="$listeners" />
+              <Worksheet :user="user" :worksheet="worksheet" :project="project" v-on="$listeners" />
           </div>
         </template><!-- END Teacher submits data so student does not need to go to project? -->
 
@@ -65,7 +65,7 @@
                 </div>
 
                 <div class="m-b4-0 p-b2-0" style="border-top:2px solid #9f9f9f">
-                    <Worksheet :worksheet="worksheet" :project="project" v-on="$listeners" />
+                    <Worksheet :user="user" :worksheet="worksheet" :project="project" v-on="$listeners" />
                 </div>
 
 
@@ -93,7 +93,7 @@
 
     <!-- Custom Project -->
     <template v-else-if="project.project.type == 'CustomProject'">
-      <Worksheet :worksheet="worksheet" :project="project" v-on="$listeners" />
+      <Worksheet :user="user" :worksheet="worksheet" :project="project" v-on="$listeners" />
     </template>
 
 
@@ -101,8 +101,6 @@
 </template>
 
 <script>
-import store from '../store.js'
-
 import Worksheet from '../components/CanvasWorksheet.vue'
 export default {
   name: 'StudentDoProject',
@@ -119,13 +117,13 @@ export default {
     }
   },
   computed: {
-    worksheet: function(){
-      if (this.project.project.type == 'CustomProject') {
-        return JSON.parse(this.project.project.json)
-      } else {
-        return store.worksheet
+      worksheet() {
+          if (this.project.project.type == 'CustomProject') {
+              return JSON.parse(this.project.project.json)
+          } else {
+              return this.project.worksheet ? this.project.worksheet.fields : null;
+          }
       }
-    }
   },
   methods: {
     createAccount: function(){

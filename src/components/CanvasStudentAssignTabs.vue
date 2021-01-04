@@ -35,14 +35,14 @@
 
       <div id="panel-2" class="canvas-panel" v-if="tabIndex === 1" role="tabpanel" tabindex="0" aria-labelledby="tab-2">
         <keep-alive>
-        <StudentViewProject :project="project" :user="user" :organization="organization" @triggerTab="handleTabTriggerEmit" />
+        <StudentViewProject :project="project" :user="user" :organization="organization" :direct="direct" @triggerTab="handleTabTriggerEmit" />
       </keep-alive>
       </div>
 
 
       <div id="panel-3" class="canvas-panel"  v-if="tabIndex === 2" role="tabpanel" tabindex="0" aria-labelledby="tab-3">
         <keep-alive>
-        <StudentDoProject :project="project" :user="user" :organization="organization" :assignment_settings="assignment_settings"  v-on="$listeners" />
+        <StudentDoProject :project="project" :user="user" :organization="organization" :assignment_settings="assignment_settings"  :direct="direct" v-on="$listeners" />
       </keep-alive>
       </div>
 
@@ -61,7 +61,7 @@ export default {
     StudentViewProject,
     StudentDoProject
   },
-  props: ['project','user','organization','assignment_settings'],
+  props: ['project','user','organization','assignment_settings', 'direct'],
   data: function(){
     return {
       tabIndex: 0

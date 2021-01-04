@@ -1,6 +1,6 @@
 <template>
-  <div class="canvas-project-details">
-    <template>
+<div class="canvas-project-details">
+  <template>
 
     <div id="project-details">
 
@@ -16,15 +16,15 @@
         </div>
 
         <template v-if="project.project.type == 'Project'">
-        <div class="project-video">
-          <div class="videoWrapper">
-            <video controls class="videoWrapper__video" :poster="project.intro_video_poster" preload="auto">
-              <template v-for="url in project.intro_video_urls_filtered">
-                <source :key="url" :src="url">
-              </template>
-            </video>
+          <div class="project-video">
+            <div class="videoWrapper">
+              <video controls class="videoWrapper__video" :poster="intro_poster" preload="auto">
+                <template v-for="vid in intro_videos">
+                  <source :key="vid.url" :type="vid.type" :src="vid.url">
+                </template>
+              </video>
+            </div>
           </div>
-        </div>
         </template>
 
         <template v-if="project.project.type == 'CustomProject'">
@@ -45,33 +45,33 @@
           <div class="frame p-base">
             <h3 class="color-p fs-base serif w-700 m-0-0-s4">Description</h3>
 
-                <vue-markdown :source="project.description || project.project.description"></vue-markdown>
+            <vue-markdown :source="project.description || project.project.description"></vue-markdown>
 
           </div>
 
           <div class="frame p-base">
             <h3 class="color-p fs-base serif w-700 m-0-0-s4">Project Details</h3>
             <table class="canvas-table">
-            <tr v-if="project.project.outdoors || project.project.indoors || project.project.location_type == 'ON'">
-              <th scope="row">Spend the time</th>
-              <td v-if="project.project.location_type == 'ON'">Online</td>
-              <td v-else-if="project.project.outdoors && project.project.indoors">Indoors and Outdoors</td>
-              <td v-else-if="project.project.outdoors">Outdoors</td>
-              <td v-else>Indoors</td>
-            </tr>
-            <tr v-if="project.project.topics.length > 0">
-              <th scope="row">Topics</th>
-              <td>{{topics}}</td>
-            </tr>
-            <tr v-if="project.project.activities.length > 0">
-              <th scope="row">Type of Activity</th>
-              <td>{{activities}}</td>
-            </tr>
-            <tr v-if="project.project.classroom_materials">
-              <th scope="row">Classroom materials</th>
-              <td>{{ project.project.classroom_materials }}</td>
-            </tr>
-          </table>
+              <tr v-if="project.project.outdoors || project.project.indoors || project.project.location_type == 'ON'">
+                <th scope="row">Spend the time</th>
+                <td v-if="project.project.location_type == 'ON'">Online</td>
+                <td v-else-if="project.project.outdoors && project.project.indoors">Indoors and Outdoors</td>
+                <td v-else-if="project.project.outdoors">Outdoors</td>
+                <td v-else>Indoors</td>
+              </tr>
+              <tr v-if="project.project.topics.length > 0">
+                <th scope="row">Topics</th>
+                <td>{{topics}}</td>
+              </tr>
+              <tr v-if="project.project.activities.length > 0">
+                <th scope="row">Type of Activity</th>
+                <td>{{activities}}</td>
+              </tr>
+              <tr v-if="project.project.classroom_materials">
+                <th scope="row">Classroom materials</th>
+                <td>{{ project.project.classroom_materials }}</td>
+              </tr>
+            </table>
           </div>
 
           <div v-if="project.student_resource_1 && project.student_resource_1.url !== ''" class="frame p-base">
@@ -95,15 +95,7 @@
           <div class="frame p-base div2">
             <h3 class="color-p fs-base serif w-700 m-0-0-s4">Materials Needed</h3>
 
-              <template v-if="project.project.type == 'Project'">
-                <ul class="standard">
-                  <li v-for="(mat,i) in project.materials" :key="'mat'+i">{{ mat }}</li>
-                </ul>
-              </template>
-              <template v-if="project.project.type == 'CustomProject'">
-                <p>{{project.project.materials}}</p>
-              </template>
-
+            <div class="content-slot" v-html="project.materials"></div>
           </div>
         </div><!-- end .flex-col -->
 
@@ -111,16 +103,12 @@
       </div><!-- end .grid -->
 
       <div class="frame p-base m-0-basehalf">
-          <h3 class="color-p fs-base serif w-700 m-0-0-s4">Project Instructions</h3>
-          <ol class="instructions">
-            <template v-if="project.project.type == 'Project'">
-              <li v-for="(step, index) in project.instruction_steps_active" :key="'step' + index">{{step}}</li>
-            </template>
-            <template v-if="project.project.type == 'CustomProject'">
-              <div class="m-0-0-base">
-              <vue-markdown :source="project.project.steps"></vue-markdown>
-            </div>
-            </template>
+        <h3 class="color-p fs-base serif w-700 m-0-0-s4">Project Instructions</h3>
+
+        <ol class="instructions">
+          <template v-for="(step, idx) in project.steps">
+            <li v-if="check_condition(step.condition)" v-html="step.text" :key="idx"></li>
+          </template>
         </ol>
 
         <a @click="triggerDoProjectTab" class="cbtn-primary">Do Project!</a>
@@ -136,66 +124,102 @@
 
 
 
-    </div>
+</div>
 </template>
 
 <script>
 import VueMarkdown from 'vue-markdown'
 export default {
-  name: 'StudentViewProject',
-  props: ['project'],
-  data: function(){
-    return {
-      questions: null
-    }
-  },
-  components: {
-      VueMarkdown
-  },
-  methods: {
-    scrollToTop(){
-      window.scrollTo(0,0)
+    name: 'StudentViewProject',
+    props: ['project'],
+    data: function(){
+        return {
+            questions: null
+        }
     },
-    triggerDoProjectTab(){
-      this.$emit('triggerTab',2);
-    }
 
-  },
-  computed: {
-    topics(){
-      let topics = []
-      this.project.project.topics.forEach(d => {
-        topics.push(d.label)
-      })
-      return topics.join(', ')
+    components: {
+        VueMarkdown
     },
-    activities(){
-      let act = []
-      this.project.project.activities.forEach(d => {
-        act.push(d.label)
-      })
-      return act.join(', ')
+
+    methods: {
+        check_condition(condition) {
+            return ((condition & this.satisfies) == condition);
+        },
+
+        scrollToTop(){
+            window.scrollTo(0,0)
+        },
+        triggerDoProjectTab(){
+            this.$emit('triggerTab',2);
+        }
+
+    },
+
+    computed: {
+        satisfies() {
+            var ret = 0x01;
+
+            if(this.direct) {
+                ret += 0x10;
+            }
+            else {
+                ret += 0x08;
+            }
+
+            return ret;
+        },
+
+        intro_videos() {
+            return this.project.videos.filter(vid => vid.role === 0);
+        },
+
+        intro_poster() {
+            // return this.intro_videos.find(vid => !!vid.poster).poster || '';
+            var matches = this.intro_videos.filter(function(v) { return !!v.poster});
+            if(matches.length >= 1) {
+                return matches[0].poster;
+            }
+            else {
+                return '';
+            }
+        },
+
+        topics(){
+            let topics = []
+            this.project.project.topics.forEach(d => {
+                topics.push(d.label)
+            })
+            return topics.join(', ')
+        },
+        activities(){
+            let act = []
+            this.project.project.activities.forEach(d => {
+                act.push(d.label)
+            })
+            return act.join(', ')
+        }
+
+    },
+
+    mounted(){
+        this.scrollToTop()
     }
-
-  },
-  mounted(){
-    this.scrollToTop()
-
-
-  },
-  created(){
-    let ctx = this
-
-    // filter videos so no nulls
-    ctx.project.intro_video_urls_filtered = [];
-    ctx.project.intro_video_urls.forEach(function(v){
-      if(v){ctx.project.intro_video_urls_filtered.push(v)}
-    })
-  }
 }
 </script>
 
 <style lang="scss">
 @import '../assets/css/CanvasVariables.scss';
 @import '../assets/css/CanvasProject.scss';
+.content-slot {
+    margin: 0px;
+    border: 0px;
+    padding: 0px;
+
+    ul {
+        list-style: disc;
+        margin-left: 0;
+        padding-left: 1.2rem;
+    }
+}
 </style>

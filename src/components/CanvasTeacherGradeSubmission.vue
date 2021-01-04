@@ -18,6 +18,7 @@ export default {
   components: {
     Worksheet
   },
+  props: ['user','organization','project','teacher_context', 'direct'],
   data: function(){
     return {
       assignment_submission:store.assignment_submission,
