@@ -1,8 +1,6 @@
 <template>
 <div class="student-do-project canvas-style">
 
-
-
   <!-- project hosted on SciStarter e.g. Stream Selfie, Project Squirrel -->
   <template v-if="project.project.form && project.project.type == 'Project'">
     <Worksheet :user="user" :worksheet="worksheet" :project="project" v-on="$listeners" />
@@ -31,7 +29,7 @@
         <div class="p-base">
           <h2 class="color-p fs-base serif w-700 m-0-0-s4">Instructions</h2>
           <ol class="instructions">
-            <li>You will create a SciStarter account with your school email address below.</li>
+            <li>You will create a SciStarter account with your school email address, below.</li>
             <li>Once that is created, you will need to click the link that shows up to the project.</li>
             <li>On that project's website, you will need to <b class="w-700">create an account with your same school email address</b>.</li>
             <li>Participate in the project on their website.</li>
@@ -80,10 +78,12 @@
       <div>
         <h2 class="color-p fs-base serif w-700 m-0-0-s4">Instructions</h2>
         <ol class="instructions">
-          <li>Click the link to the project.</li>
-          <li>On that project's website, you will need to <b class="w-700">create an account with your school email address: {{user.email}}</b></li>
+          <li>
+            <p>Click the link to the project.</p>
+            <p class="fs-b1 m-base-0-b4"><a class="cbtn-primary" target="_blank" :href="project.project.url"><b>{{project.project.name}} website &raquo;</b></a></p>
+          </li>
+          <li>On that project's website, you will need to <b class="w-700">create an account with your school email address: <em>{{user.email}}</em></b></li>
           <li>Participate in the project on their website</li>
-          <li>Come back to this page and fill out the online worksheet</li>
         </ol>
       </div>
     </div>

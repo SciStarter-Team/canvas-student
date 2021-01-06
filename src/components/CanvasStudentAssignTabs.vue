@@ -35,7 +35,7 @@
 
       <div id="panel-2" class="canvas-panel" v-if="tabIndex === 1" role="tabpanel" tabindex="0" aria-labelledby="tab-2">
         <keep-alive>
-        <StudentViewProject :project="project" :user="user" :organization="organization" :direct="direct" @triggerTab="handleTabTriggerEmit" />
+        <StudentViewProject :project="project" :user="user" :organization="organization" :direct="direct" :assignment_settings="assignment_settings" @triggerTab="handleTabTriggerEmit" />
       </keep-alive>
       </div>
 

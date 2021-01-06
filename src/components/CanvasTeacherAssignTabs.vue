@@ -10,10 +10,11 @@
         </div>
     </a></li>
 
-    <li v-if="!direct"><a @click.prevent="selectTab(1)" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2" tabindex="-1" href="#panel-2">
+    <li><a @click.prevent="selectTab(1)" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2" tabindex="-1" href="#panel-2">
         <div class="ss-tab-icon"><img src="../assets/img/canvas/screwdriver.svg" alt="screwdriver icon" /></div>
         <div class="ss-tab-text">
-          <span>Download Student Submissions</span>
+          <span v-if="direct">Record Data</span>
+          <span v-else>Download Student Submissions &amp; Record Data</span>
         </div>
     </a></li>
 
@@ -36,7 +37,7 @@
 
   <div id="panel-2" class="canvas-panel" v-if="tabIndex === 1" role="tabpanel" tabindex="0" aria-labelledby="tab-2">
     <keep-alive>
-      <ReviewSubmissions :user="user" :organization="organization" />
+      <ReviewSubmissions :user="user" :organization="organization" :project="project" />
     </keep-alive>
   </div>
 

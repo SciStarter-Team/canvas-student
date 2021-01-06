@@ -131,7 +131,7 @@
 import VueMarkdown from 'vue-markdown'
 export default {
     name: 'StudentViewProject',
-    props: ['project'],
+    props: ['project', 'user', 'assignment_settings', 'direct', 'organization'],
     data: function(){
         return {
             questions: null

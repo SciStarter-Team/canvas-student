@@ -2,7 +2,7 @@
   <div class="student-assign student content-wrapper">
 
       <StudentCompletedProject v-if="completed" :project="project" :user="user" :organization="organization" :direct="direct"/>
-      <StudentAssignmentTabs v-else :project="project" :user="user" :organization="organization" :assignment_settings="assignment_settings" @worksheetCompleted="showThankYou" :direct="direct"/>
+      <StudentAssignmentTabs v-else :project="project" :user="user" :direct="direct" :organization="organization" :assignment_settings="assignment_settings" @worksheetCompleted="showThankYou" />
 
   </div>
 </template>
@@ -17,13 +17,13 @@ export default {
     StudentAssignmentTabs
   },
   props: ['project','user','organization','assignment_settings', 'direct'],
-  data: function(){
+  data: function() {
     return {
       completed: !!this.user.assignment_done
     }
   },
   methods: {
-    showThankYou: function(){
+    showThankYou() {
       this.completed = true
     }
   }

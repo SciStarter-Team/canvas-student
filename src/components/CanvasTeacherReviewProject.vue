@@ -177,7 +177,7 @@
         </div>
       </template>
 
-      <template v-if="direct || user.type === 'teacher'">
+      <template v-if="!!direct || user.type === 'teacher'">
         <!-- participate button here? -->
       </template>
 
@@ -211,10 +211,11 @@ export default {
             return ((condition & this.satisfies) == condition);
         },
 
-        scrollToTop(){
+        scrollToTop() {
             window.scrollTo(0,0)
         },
-        createWorksheetOptions(){
+
+        createWorksheetOptions() {
             this.worksheet.map(function(d){
                 if (d.type==='select-one' && d.extra !== ''){
                     d.options = d.extra.split(',')
@@ -222,9 +223,11 @@ export default {
                 return d;
             })
         },
+
         printWorksheet(){
 
         },
+
         cancelAssignment(){
             let c = confirm("The project will be cancelled. Press OK to remove this project.")
             if (c) {
@@ -254,7 +257,7 @@ export default {
             }
         },
 
-        topics(){
+        topics() {
             let topics = []
             this.project.project.topics.forEach(d => {
                 topics.push(d.label)
@@ -262,7 +265,7 @@ export default {
             return topics.join(', ')
         },
 
-        activities(){
+        activities() {
             let act = []
             this.project.project.activities.forEach(d => {
                 act.push(d.label)
@@ -270,36 +273,19 @@ export default {
             return act.join(', ')
         },
 
-        worksheet: function(){
+        worksheet() {
             if (this.project.project.type == 'CustomProject') {
                 return JSON.parse(this.project.project.json);
             } else {
                 return this.project.worksheet ? this.project.worksheet.fields : null;
-      }
-    }
+            }
+        }
+    },
 
-  },
-  mounted(){
-    this.scrollToTop()
-    if (this.project.project.type == 'CustomProject') {
-      this.questions = JSON.parse(this.project.project.json)
+    mounted() {
+        this.scrollToTop();
+        this.createWorksheetOptions();
     }
-    if (this.project.project.type == 'Project') {
-      this.createWorksheetOptions()
-    }
-
-  },
-  created(){
-    let ctx = this
-    // filter videos so no nulls
-    ctx.project.intro_video_urls_filtered = [];
-    if (ctx.project.intro_video_urls) {
-      ctx.project.intro_video_urls.forEach(function(v){
-        if(v){ctx.project.intro_video_urls_filtered.push(v)}
-      })
-    }
-
-  }
 }
 </script>
 
