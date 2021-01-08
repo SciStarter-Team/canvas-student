@@ -14,7 +14,7 @@
 
   <h3 class="color-b fs-b4 serif w-700 m-0-0-s4">Record Data</h3>
   <p>
-    As a teacher, you'll enter data directly into the project. To do
+    As a teacher, you can enter data directly into the project. To do
     that now, visit the project's web site:
   </p>
   <p class="fs-b1 m-base-0-b4">

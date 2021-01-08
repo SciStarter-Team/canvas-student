@@ -12,11 +12,11 @@
       <ol class="instructions">
 
       <li><h4 class="fs-base w-700 tt-u color-o">Find out about the project you'll be doing</h4>
-      <p>Click on the 'About the Project' tab above to watch an introduction video and read some details about the project you'll be doing.</p></li>
+      <p>Click on the 'About the Project' tab above to watch an introduction video and read some details about the project your teacher has assigned to you.</p></li>
       <li><h4 class="fs-base w-700 tt-u color-o">Participate in the Project</h4>
-      <p>You may do the project on your own or with your teacher in the 'Do the Project' tab above.</p></li>
+      <p>Based on what your teacher specified, do the project on your own or with your teacher in the 'Do the Project' tab above. Don't forget to submit your answers to the reflection questions, in the same tab.</p></li>
       <li v-if="project.project.type !== 'CustomProject'"><h4 class="fs-base w-700 tt-u color-o">When You're Done, Watch the Thank You Video</h4>
-      <p>Once you've finished the project you'll be able to watch a thank you video from the project and possibly explore some data!</p></li>
+      <p>Once you've finished the project, watch a thank you video from the project and possibly explore some data!</p></li>
     </ol>
 
   </div>

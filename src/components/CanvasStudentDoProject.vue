@@ -32,7 +32,7 @@
           <ol class="instructions">
             <li>You will create a SciStarter account with your school email address, below.</li>
             <li>Once that is created, you will need to click the link that shows up to the project.</li>
-            <li>On that project's website, you will need to <b class="w-700">create an account with your same school email address</b>.</li>
+            <li>On that project's website, <b class="w-700">create an account with your same school email address (case sentitive)</b>.</li>
             <li>Participate in the project on their website.</li>
             <li v-if="project.reflections">Come back to this page and fill out the reflection questions.</li>
           </ol>
@@ -55,7 +55,7 @@
 
             <ol class="instructions">
               <li v-if="assignment.contributions">Your teacher wants you to do the project {{assignment.contributions}} time<template v-if="assignment.contributions > 1">s</template>.
-                <p><i>Remember to create an account with your same school email address if you haven't already.</i></p>
+                <p><i>Remember to create an account with your same school email address if you haven't already (case sensitive).</i></p>
                 <p class="fs-b1 m-base-0-b4"><a class="cbtn-primary" target="_blank" :href="project.project.url"><b>{{project.project.name}} website &raquo;</b></a></p>
               </li>
               <li v-else>Participate in the project.</li>
@@ -84,7 +84,7 @@
             <p>Click the link to the project.</p>
             <p class="fs-b1 m-base-0-b4"><a class="cbtn-primary" target="_blank" :href="project.project.url"><b>{{project.project.name}} website &raquo;</b></a></p>
           </li>
-          <li>On that project's website, you will need to <b class="w-700">create an account with your school email address: <em>{{user.email}}</em></b></li>
+          <li>On that project's website, you will need to <b class="w-700">create an account with your school email address (case sensitive): <em>{{user.email}}</em></b></li>
           <li>Participate in the project on their website</li>
           <li v-if="project.reflections">Come back to this page and fill out the reflection questions.</li>
         </ol>
@@ -102,7 +102,11 @@
 
   <template v-if="project.reflections">
     <h2 class="color-p fs-base serif w-700 m-0-0-s4">Reflection Questions</h2>
-    <Worksheet :user="user" :worksheet="project.reflections.fields" :project="project" :is_reflections="true" />
+    <p v-if="submitted_reflections">
+      You have already submitted your reflection questions. If you'd
+      like to revise your answers or resubmit, you may do so below.
+    </p>
+    <Worksheet @worksheetSubmitted="submitted_reflections = true" :user="user" :worksheet="project.reflections.fields" :project="project" :is_reflections="true" />
   </template>
 
 </div>
@@ -123,6 +127,7 @@ export default {
             assignment: {
                 contributions: 1,
             }, // set assignment stuff
+            submitted_reflections: false,
         }
     },
     computed: {
