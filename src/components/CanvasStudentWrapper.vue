@@ -1,19 +1,16 @@
 <template>
   <div class="student-assign student content-wrapper">
 
-      <StudentCompletedProject v-if="completed" :project="project" :user="user" :organization="organization" :direct="direct"/>
-      <StudentAssignmentTabs v-else :project="project" :user="user" :direct="direct" :organization="organization" :assignment_settings="assignment_settings" @worksheetCompleted="showThankYou" />
+      <StudentAssignmentTabs :completed="completed" :project="project" :user="user" :direct="direct" :organization="organization" :assignment_settings="assignment_settings" @worksheetCompleted="showThankYou" />
 
   </div>
 </template>
 
 <script>
-import StudentCompletedProject from '../components/CanvasStudentCompletedProject'
 import StudentAssignmentTabs from '../components/CanvasStudentAssignTabs'
 export default {
   name: 'StudentWrapper',
   components: {
-    StudentCompletedProject,
     StudentAssignmentTabs
   },
   props: ['project','user','organization','assignment_settings', 'direct'],

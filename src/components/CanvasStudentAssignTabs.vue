@@ -6,7 +6,8 @@
         <li><a @click.prevent="selectTab(0)" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1" tabindex="0" href="#panel-1" class="selected">
             <div class="ss-tab-icon"><img src="../assets/img/canvas/robot-head.svg" alt="SciStarter icon" /></div>
             <div class="ss-tab-text">
-                <span>Get Started</span>
+              <span v-if="completed">Thank You</span>
+              <span v-else>Get Started</span>
             </div>
         </a></li>
         <li><a @click.prevent="selectTab(1)" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2" tabindex="-1" href="#panel-2">
@@ -27,7 +28,8 @@
 
       <div id="panel-1" class="canvas-panel" v-if="tabIndex === 0" role="tabpanel" tabindex="0" aria-labelledby="tab-1" >
         <keep-alive>
-        <StudentWelcome :project="project" :user="user" :organization="organization" />
+          <StudentCompletedProject v-if="completed" :project="project" :user="user" :organization="organization" :direct="direct"/>
+          <StudentWelcome v-else :project="project" :user="user" :organization="organization" />
       </keep-alive>
       </div>
 
@@ -53,15 +55,17 @@
 import StudentWelcome from '../components/CanvasStudentWelcome.vue'
 import StudentViewProject from '../components/CanvasStudentViewProject.vue'
 import StudentDoProject from '../components/CanvasStudentDoProject.vue'
+import StudentCompletedProject from '../components/CanvasStudentCompletedProject'
 
 export default {
   name: 'StudentAssignmentTabs',
   components: {
     StudentWelcome,
     StudentViewProject,
-    StudentDoProject
+    StudentDoProject,
+    StudentCompletedProject,
   },
-  props: ['project','user','organization','assignment_settings', 'direct'],
+  props: ['completed', 'project','user','organization','assignment_settings', 'direct'],
   data: function(){
     return {
       tabIndex: 0

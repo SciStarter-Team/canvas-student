@@ -15,6 +15,7 @@
       <p>Your teacher will lead you through the project!</p>
 
       <div class="m-b4-0 p-b2-0" style="border-top:2px solid #9f9f9f">
+        <h2 class="color-p fs-base serif w-700 m-0-0-s4">Project Worksheet</h2>
         <Worksheet :user="user" :worksheet="worksheet" :project="project" v-on="$listeners" />
       </div>
     </template><!-- END Teacher submits data so student does not need to go to project? -->
@@ -33,7 +34,7 @@
             <li>Once that is created, you will need to click the link that shows up to the project.</li>
             <li>On that project's website, you will need to <b class="w-700">create an account with your same school email address</b>.</li>
             <li>Participate in the project on their website.</li>
-            <li>Come back to this page and fill out the online worksheet.</li>
+            <li v-if="project.reflections">Come back to this page and fill out the reflection questions.</li>
           </ol>
           <form class="createAccount" @submit.prevent="createAccount">
             <label class="label">School email</label>
@@ -59,6 +60,7 @@
               </li>
               <li v-else>Participate in the project.</li>
               <li>Come back to this page and fill out the worksheet below.</li>
+              <li v-if="project.reflections">Fill out the reflection questions below.</li>
             </ol>
           </div>
 
@@ -84,6 +86,7 @@
           </li>
           <li>On that project's website, you will need to <b class="w-700">create an account with your school email address: <em>{{user.email}}</em></b></li>
           <li>Participate in the project on their website</li>
+          <li v-if="project.reflections">Come back to this page and fill out the reflection questions.</li>
         </ol>
       </div>
     </div>
@@ -93,9 +96,14 @@
 
   <!-- Custom Project -->
   <template v-else-if="project.project.type == 'CustomProject'">
+    <h2 class="color-p fs-base serif w-700 m-0-0-s4">Project Worksheet</h2>
     <Worksheet :user="user" :worksheet="worksheet" :project="project" v-on="$listeners" />
   </template>
 
+  <template v-if="project.reflections">
+    <h2 class="color-p fs-base serif w-700 m-0-0-s4">Reflection Questions</h2>
+    <Worksheet :user="user" :worksheet="project.reflections.fields" :project="project" :is_reflections="true" />
+  </template>
 
 </div>
 </template>
@@ -146,7 +154,7 @@ export default {
                 headers: {"X-XCSRFToken": this.xcsrftoken},
                 body: body
             }).then(response => response.json()).then(function(data) {
-                this.$refs.join_spinner.classList.remove("spinner-border", "spinner-border-sm");
+                ctx.$refs.join_spinner.classList.remove("spinner-border", "spinner-border-sm");
 
                 if(data.result == 'created' || data.result == 'linked') {
                     ctx.user.email = data.email;
@@ -174,6 +182,10 @@ export default {
     border-radius: 8px;
     border: 4px solid #47A8D4;
     box-shadow: 2px 0 6px rgba(0,0,0,.5);
+    label {
+        margin-top: 0.25em;
+        display: block;
+    }
     input {
         width: 100%;
         display: block;

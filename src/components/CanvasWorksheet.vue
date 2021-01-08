@@ -1,20 +1,7 @@
 <template>
 <div>
-
-  <template v-if="!is_submission">
-    <div v-if="project.project.type==='Project'" class="flex flex-jc-sb width-80 m-center" style="margin-bottom:2rem;margin-top:1rem;">
-      <h3 class="color-p fs-b2 serif w-700 m-0-0-s4">Project Worksheet</h3>
-      <a @click="printWorksheet" class="print"><img src="../assets/img/canvas/print.svg" alt="print icon" /> print worksheet</a>
-    </div>
-    <div v-else class="width-80 m-center" style="margin-bottom:2rem;margin-top:1rem;">
-      <h3 class="color-p fs-b2 serif w-700 m-0-0-s4">Project Worksheet</h3>
-    </div>
-  </template>
-
-  <form class="canvas-custom-form frame width-80 p-base m-center" :class="{'is_submission':is_submission}">
-
-
-
+  <!-- <a @click="printWorksheet" class="print"><img src="../assets/img/canvas/print.svg" alt="print icon" /> print worksheet</a> -->
+  <form class="canvas-custom-form frame p-base m-center" :class="{'is_submission':is_submission}">
     <div class="customFormQuestion" v-for="(item,i) in worksheet" :key="'q' + i">
 
       <template v-if="item.type === 'heading'">
@@ -183,7 +170,7 @@
 <script>
 export default {
     name: 'Worksheet',
-    props: ['worksheet','is_submission','project', 'user'],
+    props: ['worksheet','is_submission','project', 'user', 'is_reflections'],
     data: function(){
         return {
             answers: [],
@@ -220,6 +207,7 @@ export default {
                 })
             }
         },
+
         buildAnswers(){
             let ctx = this
             this.worksheet.forEach(function(d){
@@ -232,20 +220,24 @@ export default {
 
             })
         },
+
         submitWorksheet(){
             var vm = this;
 
             this.$refs.submit_spinner.classList.add("spinner-border", "spinner-border-sm");
 
-            fetch(this.user.submit_worksheet, {
+            fetch(this.is_reflections ? this.user.submit_reflection : this.user.submit_worksheet, {
                 method: "POST",
                 credentials: "include",
                 headers: {"X-XCSRFToken": this.xcsrftoken},
                 body: JSON.stringify(this.answered)
             }).then(response => response.text()).then(function() {
+                vm.$refs.submit_spinner.classList.remove("spinner-border", "spinner-border-sm");
+                alert("Your answers have been saved.");
                 vm.$emit('worksheetCompleted');
             });
         },
+
         printWorksheet(){
 
         }

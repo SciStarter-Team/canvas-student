@@ -6,6 +6,12 @@
     <hr>
   </template>
 
+  <template v-if="assignment_submissions.reflections_available">
+    <h3 class="color-b fs-b4 serif w-700 m-0-0-s4">Student Reflections</h3>
+    <a download :href="assignment_submissions.reflections_download" class="cbtn-primary">Download {{assignment_submissions.reflections_length}} Reflection<template v-if="assignment_submissions.reflections_length != 1">s</template> as a Spreadsheet</a>
+    <hr>
+  </template>
+
   <h3 class="color-b fs-b4 serif w-700 m-0-0-s4">Record Data</h3>
   <p>
     As a teacher, you'll enter data directly into the project. To do

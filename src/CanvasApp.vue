@@ -32,7 +32,7 @@
       <!-- THIS IS THE TEACHER ONLY VIEW -->
       <TeacherWrapper v-if="user.type==='teacher'" :user="user" :organization="organization" :project="project" :teacher_context="teacher_context" :direct="direct_input"/>
 
-      <iframe width="780" height="400" src="https://orrery-media.s3-us-west-2.amazonaws.com/Tutorials/Intro+to+Citizen+Science+General-Bilingual+12142020/story.html"></iframe>
+      <iframe width="780" height="700" src="https://orrery-media.s3-us-west-2.amazonaws.com/Tutorials/Intro+to+Citizen+Science+General-Bilingual+12142020/story.html"></iframe>
     </main>
     <footer>
     </footer>
