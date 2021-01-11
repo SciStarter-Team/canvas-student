@@ -32,6 +32,13 @@
       <!-- THIS IS THE TEACHER ONLY VIEW -->
       <TeacherWrapper v-if="user.type==='teacher'" :user="user" :organization="organization" :project="project" :teacher_context="teacher_context" :direct="direct_input"/>
 
+      <p>
+        Before you start on your citizen science adventure, do what
+        every good scientist does: research your topic! We've made it
+        easy for you. Spend 15 minutes on this self-guided
+        "introduction to citizen science" tutorial and review the
+        FAQs!
+      </p>
       <iframe width="780" height="700" src="https://orrery-media.s3-us-west-2.amazonaws.com/Tutorials/Intro+to+Citizen+Science+General-Bilingual+12142020/story.html"></iframe>
     </main>
     <footer>
