@@ -4,14 +4,14 @@
   <!-- TAB NAVIGATION -->
   <ul class="canvas-tab-nav" :class="{'ctab-two':project.project.type==='CustomProject'}" role="tablist"  aria-label="Tabs" ref="tabs">
     <li><a @click.prevent="selectTab(0)" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1" tabindex="0" href="#panel-1" class="selected">
-        <div class="ss-tab-icon"><img src="../assets/img/canvas/pointing-hand.svg" alt="pointing hand icon" /></div>
+        <div class="ss-tab-icon"><img src="../assets/img/canvas/review-project.svg" alt="magnifying glass icon" /></div>
         <div class="ss-tab-text">
           <span>Review Selected Project</span>
         </div>
     </a></li>
 
     <li><a @click.prevent="selectTab(1)" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2" tabindex="-1" href="#panel-2">
-        <div class="ss-tab-icon"><img src="../assets/img/canvas/screwdriver.svg" alt="screwdriver icon" /></div>
+        <div class="ss-tab-icon"><img src="../assets/img/canvas/data.svg" alt="data graph icon" /></div>
         <div class="ss-tab-text">
           <span v-if="direct">Record Data</span>
           <span v-else>Download Student Submissions &amp; Record Data</span>
@@ -19,7 +19,7 @@
     </a></li>
 
     <li v-if="project.project.type==='Project'"><a @click.prevent="selectTab(2)" role="tab" aria-selected="false" aria-controls="panel-3" id="tab-3" tabindex="-1" href="#panel-3">
-        <div class="ss-tab-icon"><img src="../assets/img/canvas/screwdriver.svg" alt="screwdriver icon" /></div>
+        <div class="ss-tab-icon"><img src="../assets/img/canvas/high-five.svg" alt="high five icon" /></div>
         <div class="ss-tab-text">
           <span>Thank You Video</span>
         </div>

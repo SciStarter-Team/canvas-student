@@ -4,7 +4,7 @@
     <!-- TAB NAVIGATION -->
     <ul class="canvas-tab-nav" role="tablist"  aria-label="Tabs" ref="tabs">
         <li><a @click.prevent="selectTab(0)" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1" tabindex="0" href="#panel-1" class="selected">
-            <div class="ss-tab-icon"><img src="../assets/img/canvas/robot-head.svg" alt="SciStarter icon" /></div>
+            <div class="ss-tab-icon"><img v-if="completed" src="../assets/img/canvas/high-five.svg" alt="high five icon"><img v-else src="../assets/img/canvas/robot-head.svg" alt="SciStarter icon" /></div>
             <div class="ss-tab-text">
               <span v-if="completed">Thank You</span>
               <span v-else>Get Started</span>
