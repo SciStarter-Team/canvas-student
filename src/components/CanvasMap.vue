@@ -64,6 +64,10 @@ export default {
                             map.flyTo({center: [loc.coords.longitude, loc.coords.latitude], zoom: 6});
                         }, function() {
                             map.zoomTo(0);
+                        }, {
+                            maximumAge: 300000,
+                            timeout: 5000,
+                            enableHighAccuracy: false
                         });
                     }
                     else {
