@@ -18,13 +18,14 @@
   <p v-else>You've completed your assignment!</p>
 
   <p>
-    Find more citizen science projects that need your help on <a href="https://scistarter.org/">SciStarter.org</a>!
+    Find more citizen science projects that need your help on <a target="_blank" href="https://scistarter.org/">SciStarter.org</a>!
   </p>
 
   <template v-if="assignment.mappable">
     <p>
-      Here's a map of other people's contributions to {{ project.project.name }},
-      near you and around the world. Zoom in to see more!
+      Here's a map of other people's contributions to
+      {{project.project.name}}, near you and around the world. Nearby
+      contributions are clustered together. Zoom in to see more!
     </p>
     <Map :data-url="assignment.map_url"/>
   </template>

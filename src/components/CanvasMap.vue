@@ -40,6 +40,9 @@ export default {
                 'https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png',
                 function (error, image) {
                     if (error) throw error;
+
+                    map.zoomTo(0);
+
                     map.addImage('custom-marker', image);
                     map.addSource('points', {type: "geojson", data: ctx.dataUrl});
                     map.addLayer({
@@ -62,16 +65,13 @@ export default {
                     if(navigator.geolocation) {
                         navigator.geolocation.getCurrentPosition(function(loc) {
                             map.flyTo({center: [loc.coords.longitude, loc.coords.latitude], zoom: 6});
-                        }, function() {
-                            map.zoomTo(0);
-                        }, {
+                        },
+                        undefined,
+                        {
                             maximumAge: 300000,
                             timeout: 5000,
-                            enableHighAccuracy: false
+                            enableHighAccuracy: true
                         });
-                    }
-                    else {
-                        map.zoomTo(0);
                     }
                 }
             );
