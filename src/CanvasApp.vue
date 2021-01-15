@@ -41,9 +41,6 @@
 </template>
 
 <script>
-//***** REMOVE FOR PRODUCTION ********/
-import store from './store.js'
-//************************************
 import StudentWrapper from './components/CanvasStudentWrapper'
 import TeacherWrapper from './components/CanvasTeacherWrapper'
 export default {
@@ -91,9 +88,9 @@ export default {
             // 'student' is when the teacher is viewing the idividual submissions in speedgrader
             student_viewed: 'ChuckNorris@broward.edu', // student viewed when context is 'student'
 
-            fakeData: store.broward,// this is the data you sent me about projects just for prototyping REMOVE
+            fakeData: null,
 
-            assignment_submission: store.assignment_submission,
+            assignment_submission: null,
             // see example in store.js
             // this is a single submission object that you should get in the context of 'student' unless you just want to feed all the submissions
             assignment_submissions: [ // an array of submissions

@@ -39,7 +39,7 @@
             <strong>{{user.email}}</strong>
             <label class="label">Password</label>
             <input type="password" v-model="signup_password"/>
-            <button type="submit" class="cbtn-primary"><i ref="join_spinner"></i>Join</button>
+            <button type="submit" class="cbtn-primary"><i ref="join_spinner"></i>Create SciStarter Account</button>
           </form>
         </div>
       </template><!-- END Before creating account -->
@@ -78,14 +78,12 @@
       <div>
         <h2 class="color-p fs-base serif w-700 m-0-0-s4">Instructions</h2>
         <ol class="instructions">
-          <li>
-            <p>Click the link to the project.</p>
-            <p class="fs-b1 m-base-0-b4"><a class="cbtn-primary" target="_blank" :href="project.project.url"><b>{{project.project.name}} website &raquo;</b></a></p>
-          </li>
-          <li>On that project's website, you will need to <b class="w-700">create an account with your school email address (case sensitive): <em>{{user.email}}</em></b></li>
-          <li>Participate in the project on their website</li>
-          <li v-if="project.reflections">Come back to this page and fill out the reflection questions.</li>
+          <li>After you’ve read about the project and reviewed the instructions on this page, click the orange button below to visit the project’s website. This site will open in a new tab.</li>
+          <li>On the project’s website, create a project account using your school email address (case sensitive): <strong>{{user.email}}</strong></li>
+          <li>Following instructions on the project’s website, you will add observations to help scientists answer questions they can’t answer without you!</li>
+          <li v-if="project.reflections">Return to this page and complete the reflection questions, below. Your teacher will be notified when you’ve submitted your reflections.</li>
         </ol>
+        <p class="fs-b1 m-base-0-b4"><a class="cbtn-primary" target="_blank" :href="project.project.url"><b>{{project.project.name}} website &raquo;</b></a></p>
       </div>
     </div>
 
@@ -131,7 +129,11 @@ export default {
     computed: {
         worksheet() {
             if (this.project.project.type == 'CustomProject') {
-                return JSON.parse(this.project.project.json)
+                var data = this.project.project.json
+                if(typeof(data) === "string") {
+                    data = JSON.parse(data);
+                }
+                return data;
             } else {
                 return this.project.worksheet ? this.project.worksheet.fields : null;
             }

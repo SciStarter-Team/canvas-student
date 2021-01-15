@@ -2,8 +2,8 @@
 <div class="canvas-project-details">
 
   <!-- <div class="flex flex-jc-fe m-0-0-base"> -->
-  <!--     <a @click="cancelAssignment">cancel assignment</a> -->
-  <!-- </div> -->
+    <!--     <a @click="cancelAssignment">cancel assignment</a> -->
+    <!-- </div> -->
 
   <template>
 
@@ -70,6 +70,13 @@
               <tr v-if="project.project.classroom_materials">
                 <th scope="row">Classroom materials</th>
                 <td>{{ project.project.classroom_materials }}</td>
+              </tr>
+              <tr v-if="user.id == project.project.teacher.id">
+                <th scope="row">Sharing Link</th>
+                <td>
+                  <p>To invite <strong>non-students</strong> to participate in your project, share this link:</p>
+                  <input type="text" :value="project.external_url">
+                </td>
               </tr>
             </table>
           </div>

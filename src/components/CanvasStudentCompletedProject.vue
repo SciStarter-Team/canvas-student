@@ -15,6 +15,7 @@
   </template>
 
   <div v-if="project.project.type == 'Project'" v-html="project.thanks" class="m-0-0-lg"></div>
+  <p v-else-if="user.external_view">Thank you for contributing to {{project.project.name}}!</p>
   <p v-else>You've completed your assignment!</p>
 
   <p>
