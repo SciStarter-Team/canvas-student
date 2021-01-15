@@ -173,17 +173,27 @@ export default {
     props: ['worksheet','is_submission','project', 'user', 'is_reflections'],
     data: function(){
         return {
+            longitude: null,
+            latitude: null,
             answers: [],
             fileList: []
         }
     },
     computed: {
+        where() {
+            if(this.longitude === null || this.latitude === null) {
+                return null;
+            }
+
+            return [this.longitude, this.latitude];
+        },
+
         questions() {
             return this.worksheet.map(item => item.prompt);
         },
 
         answered() {
-            var ret = {};
+            var ret = {"where": this.where};
 
             for(var i = 0; i < this.questions.length; i++) {
                 ret[this.questions[i]] = this.answers[i];
@@ -243,11 +253,21 @@ export default {
         }
 
     },
-    created(){
+
+    mounted() {
+        var ctx = this;
+        if(navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(loc) {
+                ctx.longitude = loc.coords.longitude;
+                ctx.latitude = loc.coords.latitude;
+            });
+        }
+    },
+
+    created() {
         this.createWorksheetOptions()
         this.buildAnswers()
     }
-
 }
 </script>
 

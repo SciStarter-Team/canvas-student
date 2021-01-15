@@ -31,9 +31,7 @@
           <h2 class="color-p fs-base serif w-700 m-0-0-s4">Instructions</h2>
           <ol class="instructions">
             <li>You will create a SciStarter account with your school email address, below.</li>
-            <li>Once that is created, you will need to click the link that shows up to the project.</li>
-            <li>On that project's website, <b class="w-700">create an account with your same school email address (case sentitive)</b>.</li>
-            <li>Participate in the project on their website.</li>
+            <li>On the project's website, <b class="w-700">create an account with your same school email address (case sentitive)</b>.</li>
             <li v-if="project.reflections">Come back to this page and fill out the reflection questions.</li>
           </ol>
           <form class="createAccount" @submit.prevent="createAccount">

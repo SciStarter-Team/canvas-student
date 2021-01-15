@@ -17,6 +17,18 @@
   <div v-if="project.project.type == 'Project'" v-html="project.thanks" class="m-0-0-lg"></div>
   <p v-else>You've completed your assignment!</p>
 
+  <p>
+    Find more citizen science projects that need your help on <a href="https://scistarter.org/">SciStarter.org</a>!
+  </p>
+
+  <template v-if="assignment.mappable">
+    <p>
+      Here's a map of other people's contributions to {{ project.project.name }},
+      near you and around the world. Zoom in to see more!
+    </p>
+    <Map :data-url="assignment.map_url"/>
+  </template>
+
   <!-- <template v-if="data_display && project.project.type==='Project'"> -->
   <!--   <div class="separator"></div> -->
   <!--   <h1 class="color-b fs-b4 serif w-700 m-0-0-s4">Explore Project Data</h1> -->
@@ -27,9 +39,14 @@
 </template>
 
 <script>
+import Map from '../components/CanvasMap.vue'
+
 export default {
     name: 'StudentCompletedProject',
-    props: ['project','user','organization', 'direct'],
+    props: ['project','user','organization', 'direct', 'assignment'],
+    components: {
+        Map
+    },
     data: function(){
         return {
             data_display:true

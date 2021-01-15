@@ -28,7 +28,7 @@
 
       <div id="panel-1" class="canvas-panel" v-if="tabIndex === 0" role="tabpanel" tabindex="0" aria-labelledby="tab-1" >
         <keep-alive>
-          <StudentCompletedProject v-if="completed" :project="project" :user="user" :organization="organization" :direct="direct"/>
+          <StudentCompletedProject v-if="completed" :project="project" :user="user" :organization="organization" :direct="direct" :assignment="assignment"/>
           <StudentWelcome v-else :project="project" :user="user" :organization="organization" />
       </keep-alive>
       </div>
@@ -65,7 +65,7 @@ export default {
     StudentDoProject,
     StudentCompletedProject,
   },
-  props: ['completed', 'project','user','organization','assignment_settings', 'direct'],
+  props: ['completed', 'project','user','organization','assignment_settings', 'assignment', 'direct'],
   data: function(){
     return {
       tabIndex: 0

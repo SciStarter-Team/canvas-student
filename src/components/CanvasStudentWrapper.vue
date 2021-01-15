@@ -1,7 +1,7 @@
 <template>
   <div class="student-assign student content-wrapper">
 
-      <StudentAssignmentTabs :completed="completed" :project="project" :user="user" :direct="direct" :organization="organization" :assignment_settings="assignment_settings" @worksheetCompleted="showThankYou" />
+      <StudentAssignmentTabs :completed="completed" :project="project" :user="user" :direct="direct" :organization="organization" :assignment_settings="assignment_settings" :assignment="assignment" @worksheetCompleted="showThankYou" />
 
   </div>
 </template>
@@ -13,7 +13,7 @@ export default {
   components: {
     StudentAssignmentTabs
   },
-  props: ['project','user','organization','assignment_settings', 'direct'],
+  props: ['project','user','organization','assignment_settings', 'assignment', 'direct'],
   data: function() {
     return {
       completed: !!this.user.assignment_done
