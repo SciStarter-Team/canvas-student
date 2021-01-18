@@ -6,7 +6,7 @@
     </template>
 
     <template v-else>
-      <TeacherAssignTabs :user="user" :organization="organization" :project="project" :teacher_context="teacher_context" :direct="direct"/>
+      <TeacherAssignTabs :user="user" :organization="organization" :project="project" :teacher_context="teacher_context" :direct="direct" :assignment="assignment"/>
     </template>
 
   </div>
@@ -21,7 +21,7 @@ export default {
     TeacherAssignTabs,
     TeacherGradeSubmission
   },
-  props: ['user','organization','project','teacher_context', 'direct']
+  props: ['user','organization','project','teacher_context', 'direct', 'assignment']
 }
 </script>
 

@@ -71,7 +71,7 @@
                 <th scope="row">Classroom materials</th>
                 <td>{{ project.project.classroom_materials }}</td>
               </tr>
-              <tr v-if="user.id == project.project.teacher.id">
+              <tr v-if="!!project.project.teacher && user.id == project.project.teacher.id">
                 <th scope="row">Sharing Link</th>
                 <td>
                   <p>To invite <strong>non-students</strong> to participate in your project, share this link:</p>
@@ -123,7 +123,20 @@
           <!-- IF AFFILIATE WHERE STUDENT HAS TO ENTER DATA -->
           <div v-if="!project.project.form && project.project.type == 'Project'" class="frame p-base message">
             <h3 class="color-p fs-base serif w-700 m-0-0-s4">Note for Educators</h3>
-            <p>This project is not hosted on SciStarter.org. Students will need to create a project account during the assignment to log data and to receive credit for their participation. Or, you can create a project account and log data on behalf of your class to complete the assignment. To use that workflow, select "Students will submit data to teacher, Teacher will submit data to the project (suggested for younger students)" when assigning project.</p>
+            <p>
+              This project’s data entry form is not hosted on
+              SciStarter. If you assign this project and select the
+              option for students to log data on their own, they will
+              be asked to create a SciStarter account and a project
+              account (both are free and both can use the student’s
+              school email address). For students ages 12 and under,
+              we recommend the assignment option labeled "Students
+              will submit data to teacher, Teacher will submit data
+              to the project (suggested for younger students)." This
+              way, students can <em>practice</em> logging data using
+              the worksheets we provide and you have the option to log
+              their worksheet data onto the project’s website.
+            </p>
           </div>
 
         </div><!-- end .flex-col -->
@@ -159,7 +172,7 @@
         <div class="frame p-base m-base-basehalf">
           <div class="flex flex-jc-sb">
             <h3 class="color-p fs-base serif w-700 m-0-0-s4">Project Worksheet</h3>
-            <!-- <a @click="printWorksheet" class="print"><img src="../assets/img/canvas/print.svg" alt="print icon" /> print worksheet</a> -->
+            <a v-if="!!project.worksheet_pdf" :href="project.worksheet_pdf" target="_blank" download class="print"><img src="../assets/img/canvas/print.svg" alt="print icon" /> download printable worksheet</a>
           </div>
           <p class=" m-0-0-lg">This is the form students will fill out and submit to you</p>
 

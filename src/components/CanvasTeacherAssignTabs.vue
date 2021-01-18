@@ -43,7 +43,7 @@
 
   <div id="panel-3" class="canvas-panel" v-if="tabIndex === 2" role="tabpanel" tabindex="0" aria-labelledby="tab-2">
     <keep-alive>
-      <StudentCompletedProject :user="user" :organization="organization" :project="project" />
+      <StudentCompletedProject :user="user" :organization="organization" :project="project" :assignment="assignment"/>
     </keep-alive>
   </div>
 
@@ -61,7 +61,7 @@ export default {
         ReviewSubmissions,
         StudentCompletedProject
     },
-    props: ['user','organization','project','teacher_context', 'direct'],
+    props: ['user','organization','project','teacher_context', 'direct', 'assignment'],
     data: function(){
         return {
             tabIndex: 0
