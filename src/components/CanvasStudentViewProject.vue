@@ -30,8 +30,9 @@
         <template v-if="project.project.type == 'CustomProject'">
           <div class="project-video">
             <div class="videoWrapper">
-              <img :src="project.project.image" v-if="project.project.image_or_video=='image'">
-              <video :src="project.project.video" v-else-if="project.project.image_or_video='video'" controls></video>
+              <img :src="project.project.image" v-if="project.project.image_or_video=='image' && project.project.image">
+              <video :src="project.project.video" v-else-if="project.project.image_or_video='video' && project.project.video" controls></video>
+              <img src="../assets/img/canvas/robot-background-4_3.jpg" v-else>
             </div>
           </div>
         </template>

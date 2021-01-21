@@ -3,7 +3,7 @@
   <div class="ss-canvas-wrapper canvas-style">
     <header>
       <img src="./assets/img/canvas/scistarter-logo-web-r.svg" alt="SciStarter logo" />
-      <el-dropdown trigger="click" @command="help" class="help-menu">
+      <el-dropdown v-if="user.via_school" trigger="click" @command="help" class="help-menu">
         <img class="trigger" src="./assets/img/canvas/hamburger.svg" alt="open help and navigation menu" />
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item icon="el-icon-question" command="faq">Frequently Asked Questions</el-dropdown-item>
@@ -12,8 +12,9 @@
           <!-- <el-dropdown-item icon="el-icon-s-data" command="data">Data Explorer</el-dropdown-item> -->
           <el-dropdown-item icon="el-icon-s-opportunity" command="scistarter">Open the SciStarter Web Site</el-dropdown-item>
           <el-dropdown-item icon="el-icon-s-custom" command="dashboard" v-if="user.hasAccount">SciStarter Dashboard</el-dropdown-item>
+          <el-dropdown-item icon="el-icon-user-solid" command="password" v-if="user.type==='teacher'">Set SciStarter Password</el-dropdown-item>
         </el-dropdown-menu>
-    </el-dropdown>
+      </el-dropdown>
     </header>
     <main>
       <!-- THIS IS THE STUDENT ONLY VIEW -->
@@ -22,18 +23,36 @@
       <!-- THIS IS THE TEACHER ONLY VIEW -->
       <TeacherWrapper v-if="user.type==='teacher'" :user="user" :organization="organization" :project="project" :teacher_context="teacher_context" :assignment="assignment" :direct="direct_input"/>
 
-      <el-dialog title="Frequently Asked Questions" :visible.sync="faq_dialog_visible">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sollicitudin aliquam lorem nec fermentum. Nunc ullamcorper ligula at fringilla ultrices. Quisque vitae eros euismod, euismod felis sed, semper ligula. Vivamus consequat dignissim accumsan. Maecenas sed lectus bibendum, euismod dolor at, facilisis ex. Quisque iaculis gravida vulputate. Suspendisse id condimentum dolor. Vestibulum vestibulum pulvinar posuere. Suspendisse eget hendrerit risus. Nunc at dolor eu lorem dictum tincidunt vitae at erat. Proin quam mauris, ultrices a molestie et, blandit sit amet lacus. Curabitur tempor sed sapien eu tristique.</p>
-        <p>Vestibulum ligula diam, porttitor at enim non, rhoncus cursus lorem. Proin id justo sit amet dui euismod iaculis sed aliquet augue. Vivamus convallis gravida augue sed aliquet. Phasellus auctor mollis elit ut pellentesque. Proin vel enim enim. Duis efficitur venenatis lorem, in facilisis turpis sodales mollis. In tincidunt lacus ipsum, quis ultricies elit pretium a. Donec vitae nulla eu est laoreet aliquam quis ut tortor. Sed fringilla nunc at metus tempus, ac consectetur risus fringilla. Pellentesque pellentesque eu felis at mattis. Sed in est pulvinar, faucibus dolor eget, finibus ante. Praesent rutrum, leo ut fermentum commodo, sapien justo sagittis massa, a luctus ante ante vitae ante.</p>
+      <el-dialog title="Frequently Asked Questions" :visible.sync="faq_dialog_visible" width="600px">
+        <Faq slug="broward-demo"/>
       </el-dialog>
 
       <el-dialog title="Intro to Citizen Science" :visible.sync="intro_dialog_visible" width="580px">
-        <iframe width="540" height="460" src="https://orrery-media.s3-us-west-2.amazonaws.com/Tutorials/Intro+to+Citizen+Science+General-Bilingual+12142020/story.html"></iframe>
+        <iframe width="540" height="460" src="https://media.scistarter.org/curated/Broward+Tutorial_January+2021/Broward+Citizen+Science+Tutorial_January_21_2021+-+Storyline+output/story.html"></iframe>
       </el-dialog>
 
       <el-dialog title="How to Pick or Create a New Project" :visible.sync="howto_dialog_visible">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sollicitudin aliquam lorem nec fermentum. Nunc ullamcorper ligula at fringilla ultrices. Quisque vitae eros euismod, euismod felis sed, semper ligula. Vivamus consequat dignissim accumsan. Maecenas sed lectus bibendum, euismod dolor at, facilisis ex. Quisque iaculis gravida vulputate. Suspendisse id condimentum dolor. Vestibulum vestibulum pulvinar posuere. Suspendisse eget hendrerit risus. Nunc at dolor eu lorem dictum tincidunt vitae at erat. Proin quam mauris, ultrices a molestie et, blandit sit amet lacus. Curabitur tempor sed sapien eu tristique.</p>
-        <p>Vestibulum ligula diam, porttitor at enim non, rhoncus cursus lorem. Proin id justo sit amet dui euismod iaculis sed aliquet augue. Vivamus convallis gravida augue sed aliquet. Phasellus auctor mollis elit ut pellentesque. Proin vel enim enim. Duis efficitur venenatis lorem, in facilisis turpis sodales mollis. In tincidunt lacus ipsum, quis ultricies elit pretium a. Donec vitae nulla eu est laoreet aliquam quis ut tortor. Sed fringilla nunc at metus tempus, ac consectetur risus fringilla. Pellentesque pellentesque eu felis at mattis. Sed in est pulvinar, faucibus dolor eget, finibus ante. Praesent rutrum, leo ut fermentum commodo, sapien justo sagittis massa, a luctus ante ante vitae ante.</p>
+        <p>In Canvas, create a new assignment or click the "Edit
+      </el-dialog>
+
+      <el-dialog title="Create a SciStarter Account" :visible.sync="signup_dialog_visible" width="400px">
+        <form class="createAccount" @submit.prevent="createAccount">
+          <label class="label">School email</label>
+          <strong>{{user.email}}</strong>
+          <label class="label">Password</label>
+          <input type="password" v-model="signup_password"/>
+          <a style="margin-right: 1rem" @click="cancelCreateAccount">skip</a><button type="submit" class="cbtn-primary"><i ref="join_spinner"></i>Create SciStarter Account</button>
+        </form>
+      </el-dialog>
+
+      <el-dialog title="Set SciStarter Password" :visible.sync="password_dialog_visible" width="400px">
+        <form class="createAccount" @submit.prevent="createAccount">
+          <label class="label">School email</label>
+          <strong>{{user.email}}</strong>
+          <label class="label">Password</label>
+          <input type="password" v-model="signup_password"/>
+          <button type="submit" class="cbtn-primary"><i ref="join_spinner"></i>Set Password</button>
+        </form>
       </el-dialog>
     </main>
     <footer>
@@ -46,12 +65,14 @@
 <script>
 import StudentWrapper from './components/CanvasStudentWrapper'
 import TeacherWrapper from './components/CanvasTeacherWrapper'
+import Faq from './components/CanvasFaq'
 export default {
     name: 'App',
 
     components: {
         StudentWrapper,
-        TeacherWrapper
+        TeacherWrapper,
+        Faq
     },
 
     computed: {
@@ -80,6 +101,10 @@ export default {
                 id: this.assignment.id,
                 submitted_by: this.direct_input ? 'student' : 'teacher'
             };
+        },
+
+        xcsrftoken() {
+            return JSON.parse(document.getElementById('data-xcsrf-token').textContent);
         }
     },
 
@@ -88,6 +113,11 @@ export default {
             faq_dialog_visible: false,
             intro_dialog_visible: false,
             howto_dialog_visible: false,
+            signup_dialog_visible: false,
+            password_dialog_visible: false,
+
+            signup_email: "",
+            signup_password: "",
 
             teacher_context: 'assignment', // two possible values:
             // 'assignment' is the view after a teacher uses the external tool to assign or goes back to the
@@ -121,13 +151,67 @@ export default {
             case "data":
                 break;
             case "scistarter":
-                window.open('https://scistarter.org/', '_blank');
+                if(this.user.hasAccount) {
+                    window.open('https://scistarter.org/affiliates', '_blank');
+                }
+                else {
+                    this.signup_dialog_visible = true;
+                }
                 break;
             case "dashboard":
                 window.open('https://scistarter.org/dashboard', '_blank');
                 break;
+            case "password":
+                this.password_dialog_visible = true;
+                break;
             default:
             }
+        },
+        createAccount: function() {
+            var ctx = this;
+
+            var email = ctx.signup_email ? ctx.signup_email : ctx.user.email;
+
+            var body = new FormData();
+            body.append("email", email);
+            body.append("password", ctx.signup_password);
+
+            ctx.$refs.join_spinner.classList.add("spinner-border", "spinner-border-sm");
+
+            fetch(ctx.user.create_account, {
+                method: "POST",
+                credentials: "include",
+                headers: {"X-XCSRFToken": ctx.xcsrftoken},
+                body: body
+            }).then(response => response.json()).then(function(data) {
+                ctx.$refs.join_spinner.classList.remove("spinner-border", "spinner-border-sm");
+
+                if(data.result == 'created' || data.result == 'linked') {
+                    ctx.user.email = data.email;
+                    ctx.user.hasAccount = true;
+
+                    if(data.warning) {
+                        alert(data.warning);
+                    }
+                    else {
+                        if(ctx.signup_dialog_visible) {
+                            ctx.signup_dialog_visible = false;
+                            window.open('https://scistarter.org/affiliates', '_blank');
+                        }
+                        else if(ctx.password_dialog_visible) {
+                            ctx.password_dialog_visible = false;
+                            alert("Password has been changed");
+                        }
+                    }
+                }
+                else {
+                    alert(data.error);
+                }
+            });
+        },
+        cancelCreateAccount() {
+            this.signup_dialog_visible = false;
+            window.open('https://scistarter.org/affiliates', '_blank');
         },
         changeUserType(t) {
             this.user.type = t;
@@ -158,10 +242,38 @@ header {
 
     .help-menu.el-dropdown {
         position: absolute;
-        top: 28px;
+        top: 33px;
         right: 150px;
         border: none;
         padding: 0px;
+
+        img.trigger {
+            width: 40px;
+            height: 30px;
+        }
     }
+}
+
+.createAccount {
+    width: 100%;
+    margin: 0 auto;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 4px solid #47A8D4;
+    box-shadow: 2px 0 6px rgba(0,0,0,.5);
+    label {
+        margin-top: 0.25em;
+        display: block;
+    }
+    input {
+        width: 100%;
+        display: block;
+        border: 1px solid #efefef;
+        padding: .4rem;
+    }
+}
+
+.cbtn-primary > i {
+    vertical-align: middle;
 }
 </style>

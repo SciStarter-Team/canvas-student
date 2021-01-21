@@ -1,6 +1,6 @@
 <template>
 <div>
-  <!-- <a @click="printWorksheet" class="print"><img src="../assets/img/canvas/print.svg" alt="print icon" /> print worksheet</a> -->
+  <a v-if="project.worksheet_pdf && !is_reflections" :href="project.worksheet_pdf" download target="_blank" class="print"><img src="../assets/img/canvas/print.svg" alt="print icon" /> printable worksheet</a>
   <form class="canvas-custom-form frame p-base m-center" :class="{'is_submission':is_submission}">
     <div class="customFormQuestion" v-for="(item,i) in worksheet" :key="'q' + i">
 
@@ -232,19 +232,19 @@ export default {
         },
 
         submitWorksheet(){
-            var vm = this;
+            var ctx = this;
 
-            this.$refs.submit_spinner.classList.add("spinner-border", "spinner-border-sm");
+            ctx.$refs.submit_spinner.classList.add("spinner-border", "spinner-border-sm");
 
-            fetch(this.is_reflections ? this.user.submit_reflection : this.user.submit_worksheet, {
+            fetch(ctx.is_reflections ? ctx.user.submit_reflection : ctx.user.submit_worksheet, {
                 method: "POST",
                 credentials: "include",
-                headers: {"X-XCSRFToken": this.xcsrftoken},
-                body: JSON.stringify(this.answered)
+                headers: {"X-XCSRFToken": ctx.xcsrftoken},
+                body: JSON.stringify(ctx.answered)
             }).then(response => response.text()).then(function() {
-                vm.$refs.submit_spinner.classList.remove("spinner-border", "spinner-border-sm");
+                ctx.$refs.submit_spinner.classList.remove("spinner-border", "spinner-border-sm");
+                ctx.$emit('worksheetCompleted');
                 alert("Your answers have been saved.");
-                vm.$emit('worksheetCompleted');
             });
         },
 

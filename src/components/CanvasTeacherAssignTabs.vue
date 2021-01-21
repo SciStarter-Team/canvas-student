@@ -37,7 +37,7 @@
 
   <div id="panel-2" class="canvas-panel" v-if="tabIndex === 1" role="tabpanel" tabindex="0" aria-labelledby="tab-2">
     <keep-alive>
-      <ReviewSubmissions :user="user" :organization="organization" :project="project" />
+      <ReviewSubmissions :user="user" :organization="organization" :project="project" v-on="$listeners"/>
     </keep-alive>
   </div>
 

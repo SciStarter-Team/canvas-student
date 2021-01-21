@@ -13,20 +13,29 @@
   </template>
 
   <h3 class="color-b fs-b4 serif w-700 m-0-0-s4">Record Data</h3>
-  <p>
-    As a teacher, you can enter data directly into the project. To do
-    that now, visit the project's web site:
-  </p>
-  <p class="fs-b1 m-base-0-b4">
-    <a class="cbtn-primary" target="_blank" :href="project.project.url"><b>{{project.project.name}} website &raquo;</b></a>
-  </p>
+  <template v-if="project.project.type==='CustomProject'">
+    <Worksheet :user="user" :worksheet="worksheet" :project="project" v-on="$listeners" />
+  </template>
+  <template v-else>
+    <p>
+      As a teacher, you can enter data directly into the project. To do
+      that now, visit the project's web site:
+    </p>
+    <p class="fs-b1 m-base-0-b4">
+      <a class="cbtn-primary" target="_blank" :href="project.project.url"><b>{{project.project.name}} website &raquo;</b></a>
+    </p>
+  </template>
 
   </div>
 </template>
 
 <script>
+import Worksheet from '../components/CanvasWorksheet.vue'
 export default {
     name: 'TeacherReviewSubmissions',
+    components: {
+        Worksheet
+    },
     props: ["user", "organization", "project"],
     data: function() {
         return {
@@ -39,6 +48,18 @@ export default {
             let el = document.getElementById('data-submissions');
             return JSON.parse(el ? el.textContent : '{"available": false}');
         },
+
+        worksheet() {
+            if (this.project.project.type == 'CustomProject') {
+                var data = this.project.project.json
+                if(typeof(data) === "string") {
+                    data = JSON.parse(data);
+                }
+                return data;
+            } else {
+                return this.project.worksheet ? this.project.worksheet.fields : null;
+            }
+        }
     },
 }
 </script>

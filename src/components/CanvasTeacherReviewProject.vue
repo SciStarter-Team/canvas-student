@@ -35,8 +35,9 @@
         <template v-if="project.project.type == 'CustomProject'">
           <div class="project-video">
             <div class="videoWrapper">
-              <img :src="project.project.image" v-if="project.project.image_or_video=='image'">
-              <video :src="project.project.video" v-else-if="project.project.image_or_video='video'" controls></video>
+              <img :src="project.project.image" v-if="project.project.image_or_video=='image' && project.project.image">
+              <video :src="project.project.video" v-else-if="project.project.image_or_video='video' && project.project.video" controls></video>
+              <img src="../assets/img/canvas/robot-background-4_3.jpg" v-else>
             </div>
           </div>
         </template>
@@ -71,7 +72,7 @@
                 <th scope="row">Classroom materials</th>
                 <td>{{ project.project.classroom_materials }}</td>
               </tr>
-              <tr v-if="!!project.project.teacher && user.id == project.project.teacher.id">
+              <tr v-if="!!project.project.teacher && user.type == 'teacher' && user.id == project.project.teacher.id">
                 <th scope="row">Sharing Link</th>
                 <td>
                   <p>To invite <strong>non-students</strong> to participate in your project, share this link:</p>
@@ -168,7 +169,7 @@
         </div>
       </template>
 
-      <template v-if="!direct && project.project.type == 'Project' && !!worksheet">
+      <template v-if="!direct && project.project.type == 'Project' && !!worksheet && worksheet.length > 0">
         <div class="frame p-base m-base-basehalf">
           <div class="flex flex-jc-sb">
             <h3 class="color-p fs-base serif w-700 m-0-0-s4">Project Worksheet</h3>
