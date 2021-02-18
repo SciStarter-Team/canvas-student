@@ -11,7 +11,7 @@
       <label v-else class="label">{{item.prompt}}</label>
 
       <!-- ******* TEXTFIELDS ************ -->
-      <div v-if="item.type === 'short-text' || item.fieldType==='textField' ">
+      <div v-if="item.type === 'short-text' || item.fieldType==='text' ">
         <template v-if="!is_submission">
           <el-input v-model="answers[i]" :placeholder="item.placeholder" />
         </template>
@@ -21,7 +21,7 @@
       </div>
 
       <!-- ******* TEXTAREA ************ -->
-      <div v-else-if="item.type === 'long-text' || item.fieldType === 'p' || item.fieldType === 'paragraphField'">
+      <div v-else-if="item.type === 'long-text' || item.fieldType === 'p' || item.fieldType === 'textarea'">
         <template v-if="!is_submission">
           <el-input type="textarea" v-model="answers[i]" />
         </template>
@@ -146,12 +146,12 @@
       <div v-else-if="item.fieldType === 'checkbox' || item.type==='select-many'">
         <template v-if="!is_submission">
           <el-checkbox-group v-model="answers[i]">
-            <el-checkbox v-for="c in item.options" :key="c" :label="c"></el-checkbox>
+            <el-checkbox v-for="c in item.options" :key="c + i" :label="c"></el-checkbox>
           </el-checkbox-group>
         </template>
         <template v-else>
           <el-checkbox-group v-model="answers[i]">
-            <el-checkbox v-for="c in item.options" :key="c" :label="c" disabled></el-checkbox>
+            <el-checkbox v-for="c in item.options" :key="c + i" :label="c" disabled></el-checkbox>
           </el-checkbox-group>
         </template>
       </div>
@@ -224,8 +224,10 @@ export default {
                 // if this is displaying a student submission
                 if (ctx.is_submission) {
                     ctx.answers.push(d.answer)
+                } else if (d.name === 'Select Many' || d.name == 'selectMany') {
+                    ctx.answers.push([]);
                 } else {
-                    ctx.answers.push('')
+                    ctx.answers.push('');
                 }
 
             })
@@ -255,6 +257,7 @@ export default {
     },
 
     mounted() {
+        console.log(this.worksheet);
         var ctx = this;
         if(navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(loc) {

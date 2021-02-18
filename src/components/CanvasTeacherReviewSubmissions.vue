@@ -25,8 +25,7 @@
       <a class="cbtn-primary" target="_blank" :href="project.project.url"><b>{{project.project.name}} website &raquo;</b></a>
     </p>
   </template>
-
-  </div>
+</div>
 </template>
 
 <script>

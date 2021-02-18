@@ -1,7 +1,7 @@
 <template>
   <form class="createAccount" @submit.prevent="create">
     <label class="label">School email</label>
-    <input v-if="allowPickEmail" type="email" :value="user.email" v-model="signup_email">
+    <input v-if="allowPickEmail" type="email" v-model="signup_email">
     <strong v-else>{{user.email}}</strong>
     <label class="label">Password</label>
     <input type="password" v-model="signup_password"/>

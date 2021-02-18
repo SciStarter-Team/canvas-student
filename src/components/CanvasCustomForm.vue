@@ -2,7 +2,7 @@
   <div class="canvas-custom-form frame width-80 p-base m-center">
 
     <div class="customFormQuestion" v-for="(item,i) in fields" :key="'q' + i">
-        <p class="label">{{item.prompt}}</p>
+      <p class="label">{{item.prompt}}</p>
 
         <!-- ******* RADIOS ************ -->
         <div v-if="item.fieldType==='radio'">

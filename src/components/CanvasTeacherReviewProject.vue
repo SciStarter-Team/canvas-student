@@ -70,7 +70,7 @@
               </tr>
               <tr v-if="project.project.classroom_materials">
                 <th scope="row">Classroom materials</th>
-                <td>{{ project.project.classroom_materials }}</td>
+                <td><a :href="project.project.classroom_materials" target="_blank">{{ project.project.classroom_materials }}</a></td>
               </tr>
               <tr v-if="!!project.project.teacher && user.type == 'teacher' && user.id == project.project.teacher.id">
                 <th scope="row">Sharing Link</th>
@@ -181,15 +181,15 @@
             <h4 class="label" :class="{'heading':item.type=='heading'}">{{item.prompt}}</h4>
             <small v-if="item.extra">{{item.extra}}</small>
 
-            <input v-if="item.type=='short-text'" type="text" disabled />
-            <textarea v-else-if="item.type=='long-text'" disabled></textarea>
+            <input v-if="item.fieldType=='text'" type="text" disabled />
+            <textarea v-else-if="item.fieldType=='textarea'" disabled></textarea>
 
             <el-radio-group v-else-if="item.type==='true-false'">
               <el-radio :value="true" disabled>Yes</el-radio>
               <el-radio :value="false" disabled>No</el-radio>
             </el-radio-group>
 
-            <el-select v-else-if="item.type==='select-one' && item.options" placeholder="Select One">
+            <el-select v-else-if="item.type==='select-one' && item.options" placeholder="Select One" disabled>
               <el-option v-for="o in item.options" :key="o" :value="o" :label="o"></el-option>
             </el-select>
 
