@@ -21,7 +21,8 @@ export default {
   },
   methods: {
     showThankYou() {
-      this.completed = true
+        this.completed = true;
+        window.location.hash = '#reflections';
     }
   }
 }

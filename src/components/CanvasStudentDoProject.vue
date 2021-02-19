@@ -115,7 +115,7 @@
     </template>
 
     <template v-if="project.reflections">
-      <h2 id="reflections" class="color-p fs-base serif w-700 m-0-0-s4">Reflection Questions</h2>
+      <h2 id="reflections" class="color-p fs-base serif w-700 m-0-0-s4" style="margin-top: 2rem">Reflection Questions</h2>
       <p v-if="submitted_reflections">
         You have already submitted your reflection questions. If you'd
         like to revise your answers or resubmit, you may do so below.
