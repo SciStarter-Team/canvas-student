@@ -223,4 +223,8 @@ export default {
         padding-left: 1.2rem;
     }
 }
+
+.canvas-table td {
+    overflow-wrap: anywhere;
+}
 </style>

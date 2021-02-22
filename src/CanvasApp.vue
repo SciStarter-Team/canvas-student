@@ -28,7 +28,8 @@
       </el-dialog>
 
       <el-dialog title="Intro to Citizen Science" :visible.sync="intro_dialog_visible" width="580px">
-        <iframe width="540" height="460" src="https://media.scistarter.org/curated/Broward+Tutorial_January+2021/Broward+Citizen+Science+Tutorial_January_21_2021+-+Storyline+output/story.html"></iframe>
+        <iframe ref="tutframe" width="540" height="460" @load="$refs.tutframe.style.transform = 'scale(0.99, 1)'" src="https://media.scistarter.org/curated/Broward+Tutorial_January+2021/Broward+Citizen+Science+Tutorial_January_21_2021+-+Storyline+output/story.html"></iframe>
+        <p>Or, <a href="https://media.scistarter.org/curated/Broward+Tutorial_January+2021/Broward+Citizen+Science+Tutorial_January_21_2021+-+Storyline+output/story.html" target="_blank">Open the tutorial in a new tab</a></p>
       </el-dialog>
 
       <el-dialog title="How to Pick or Create a New Project" :visible.sync="howto_dialog_visible">
@@ -97,9 +98,18 @@ export default {
         },
 
         assignment_settings() {
+            let submitter = 'teacher';
+
+            if(this.assignment.input_mode == 'direct') {
+                submitter = 'student';
+            }
+            else if(this.assignment.input_mode == 'delegated') {
+                submitter = 'delegated';
+            }
+
             return {
                 id: this.assignment.id,
-                submitted_by: this.direct_input ? 'student' : 'teacher'
+                submitted_by: submitter
             };
         },
 

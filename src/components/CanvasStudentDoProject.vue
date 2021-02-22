@@ -38,7 +38,19 @@
         </div>
       </template><!-- END Teacher submits data so student does not need to go to project? -->
 
-
+      <!-- Student submits data using a teacher-created account -->
+      <template v-else-if="assignment_settings.submitted_by === 'delegated'">
+        <div>
+          <h2 class="color-p fs-base serif w-700 m-0-0-s4">Instructions</h2>
+          <ol class="instructions">
+            <li>After you’ve read about the project and reviewed the instructions on this page, click the orange button below to visit the project’s website. This site will open in a new tab.</li>
+            <li>On the project’s website, use the username and password provided by your teacher to log in.</li>
+            <li>Following instructions on the project’s website, you will add observations to help scientists answer questions they can’t answer without you!</li>
+            <li v-if="project.reflections">Return to this page and complete the reflection questions, below. Your teacher will be notified when you’ve submitted your reflections.</li>
+          </ol>
+          <p class="fs-b1 m-base-0-b4"><a class="cbtn-primary" target="_blank" :href="project.project.url"><b>{{project.project.name}} website &raquo;</b></a></p>
+        </div>
+      </template>
 
       <!-- The student does not have an account in SciStarter already -->
       <template v-else-if="assignment_settings.submitted_by === 'student' && !user.hasAccount">
