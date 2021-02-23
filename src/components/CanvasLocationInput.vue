@@ -162,12 +162,12 @@ export default {
 
         ctx.drawn = new L.GeoJSON();
 
-        ctx.clusters = L.markerClusterGroup({
-            maxClusterRadius: 15, // Can be a e.g. function(zoom_level) {return 15;}
-            showCoverageOnHover: false,
-            //disableClusteringAtZoom: 17,
-            spiderLegPolylineOptions: { weight: 2.0, color: "#47a8d4", opacity: 1.0 }
-        });
+        // ctx.clusters = L.markerClusterGroup({
+        //     maxClusterRadius: 15, // Can be a e.g. function(zoom_level) {return 15;}
+        //     showCoverageOnHover: false,
+        //     //disableClusteringAtZoom: 17,
+        //     spiderLegPolylineOptions: { weight: 2.0, color: "#47a8d4", opacity: 1.0 }
+        // });
 
         if(ctx.cluster) {
             ctx.map.addLayer(ctx.clusters);
