@@ -19,8 +19,8 @@
         <li><a @click.prevent="selectTab(2)" role="tab" aria-selected="false" aria-controls="panel-3" id="tab-3" tabindex="-1" href="#panel-3">
           <div class="ss-tab-icon"><img src="../assets/img/canvas/do-project.svg" alt="paper icon" /></div>
           <div class="ss-tab-text">
-            <span v-if="direct">Do the Project</span>
-            <span v-else>Go to Worksheet</span>
+            <span v-if="assignment.input_mode=='worksheet'">Go to Worksheet</span>
+            <span v-else>Do the Project</span>
           </div>
         </a></li>
       </ul>
