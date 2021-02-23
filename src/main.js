@@ -16,5 +16,5 @@ Vue.filter('formatDate', function(value) {
 });
 
 new Vue({
-  render: h => h(App),
+    render: h => h(App),
 }).$mount('#app')

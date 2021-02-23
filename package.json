@@ -10,9 +10,11 @@
     },
     "dependencies": {
         "core-js": "^3.6.5",
+        "leaflet": "^1.7.1",
+        "lodash": "^4.17.21",
         "mapbox-gl": "^2.0.1",
         "vue": "^2.6.11",
-        "vue-markdown": "^2.2.4"
+        "vue-markdown": "^2.1.2"
     },
     "devDependencies": {
         "@vue/cli-plugin-babel": "~4.5.0",

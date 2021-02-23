@@ -68,7 +68,7 @@
               </tr>
               <tr v-if="project.project.classroom_materials">
                 <th scope="row">Classroom materials</th>
-                <td>{{ project.project.classroom_materials }}</td>
+                <td><a :href="project.project.classroom_materials" target="_blank">{{ project.project.classroom_materials }}</a></td>
               </tr>
             </table>
           </div>

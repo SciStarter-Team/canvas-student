@@ -156,6 +156,20 @@
         </template>
       </div>
 
+      <!-- LOCATION -->
+      <div v-else-if="item.type === 'location'">
+        <template v-if="!is_submission">
+          <LocationInput :value="location_as_geojson"
+                         @input="location_from_geojson($event)"
+                         mode="point"
+                         :editable="true"
+                         :fields="['latlon']"
+                         />
+        </template>
+        <template v-else>
+          {{ where }}
+        </template>
+      </div>
 
     </div>
     <template v-if="!is_submission">
@@ -168,9 +182,13 @@
 </template>
 
 <script>
+import LocationInput from '../components/CanvasLocationInput';
 export default {
     name: 'Worksheet',
     props: ['worksheet','is_submission','project', 'user', 'is_reflections'],
+    components: {
+        LocationInput
+    },
     data: function(){
         return {
             longitude: null,
@@ -186,6 +204,13 @@ export default {
             }
 
             return [this.longitude, this.latitude];
+        },
+
+        location_as_geojson: function() {
+            return JSON.stringify({
+                type: 'Point',
+                coordinates: [this.longitude, this.latitude]
+            });
         },
 
         questions() {
@@ -207,6 +232,14 @@ export default {
         }
     },
     methods: {
+        location_from_geojson: function(geojson) {
+            var data = JSON.parse(geojson);
+            if (data.type == 'Point') {
+                this.longitude = data.coordinates[0];
+                this.latitude = data.coordinates[1];
+            }
+        },
+
         createWorksheetOptions(){
             if (!this.is_submission) {
                 this.worksheet.map(function(d){
@@ -257,7 +290,6 @@ export default {
     },
 
     mounted() {
-        console.log(this.worksheet);
         var ctx = this;
         if(navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(loc) {
