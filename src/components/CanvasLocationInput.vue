@@ -59,6 +59,7 @@
 <script>
 import _ from 'lodash';
 import L from 'leaflet';
+import "leaflet/dist/leaflet.css";
 export default {
     name: "LocationInput",
     props: ['value', 'mode', 'editable', 'fields', 'cluster', 'defaults'],
@@ -175,8 +176,13 @@ export default {
 
         ctx.map.addLayer(ctx.drawn);
 
-        if(ctx.mode == 'point' && !ctx.value) {
-            ctx.marker = L.marker([-97, 38]).addTo(ctx.drawn);
+        if(ctx.mode == 'point') {
+            if(!ctx.value) {
+                ctx.marker = L.circleMarker([-97, 38], {radius: 5}).addTo(ctx.drawn);
+            }
+            else {
+                ctx.marker = L.circleMarker([ctx.longitude, ctx.latitude], {radius: 5}).addTo(ctx.drawn);
+            }
         }
         else {
             ctx.update(ctx.value, render_popup);
@@ -202,7 +208,7 @@ export default {
                         rectangle: ctx.mode == 'poly',
                         circle: false,
                         marker: ctx.mode == 'point',
-                        circlemarker: false
+                        circlemarker: true
                     }
                 });
 
@@ -357,7 +363,7 @@ export default {
 .ss-map {
   .display {
     height: 320px;
-    width: 100%;
+    width: 700px;
   }
 }
 </style>
