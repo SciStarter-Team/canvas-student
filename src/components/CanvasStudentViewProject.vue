@@ -45,9 +45,7 @@
         <div class="flex-col">
           <div class="frame p-base">
             <h3 class="color-p fs-base serif w-700 m-0-0-s4">Description</h3>
-
             <vue-markdown :source="project.description || project.project.description"></vue-markdown>
-
           </div>
 
           <div class="frame p-base">
@@ -75,13 +73,10 @@
             </table>
           </div>
 
-          <div v-if="project.student_resource_1 && project.student_resource_1.url !== ''" class="frame p-base">
-            <h3 class="color-p fs-base serif w-700 m-0-0-s4">Additional Resources for Students</h3>
+          <div v-if="project.student_resources && project.student_resources.length > 0" class="frame p-base">
+            <h3 class="color-p fs-base serif w-700 m-0-0-s4">Additional Resources</h3>
             <ul class="standard">
-              <li><a :href="project.student_resource_1.url" target="_blank">{{project.student_resource_1.name || project.student_resource_1.url}}</a></li>
-              <li v-if="!!project.student_resource_2.url"><a :href="project.student_resource_2.url" target="_blank">{{project.student_resource_2.name || project.student_resource_2.url}}</a></li>
-              <li v-if="!!project.student_resource_3.url"><a :href="project.student_resource_2.url" target="_blank">{{project.student_resource_3.name || project.student_resource_3.url}}</a></li>
-              <li v-if="!!project.student_resource_4.url"><a :href="project.student_resource_4.url" target="_blank">{{project.student_resource_4.name || project.student_resource_4.url}}</a></li>
+              <li v-for="res in project.student_resources" :key="res.url"><a :href="res.url" target="_blank">{{res.label || res.url}}</a></li>
             </ul>
           </div>
         </div><!-- end .flex-col -->
