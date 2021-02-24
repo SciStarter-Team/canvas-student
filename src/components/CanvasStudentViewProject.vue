@@ -107,11 +107,11 @@
           </template>
         </ol>
 
-        <a @click="triggerDoProjectTab" class="cbtn-primary">Do Project!</a>
-
       </div>
 
-
+      <p>
+        <a @click="triggerDoProjectTab" class="cbtn-primary"><span v-if="assignment_settings.input_mode=='worksheet'">Go to Worksheet</span><span v-else>Do the Project</span></a>
+      </p>
 
     </div><!-- end #project-details -->
 

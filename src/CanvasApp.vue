@@ -109,7 +109,10 @@ export default {
 
             return {
                 id: this.assignment.id,
-                submitted_by: submitter
+                submitted_by: submitter,
+                project_username: this.assignment.project_username,
+                project_password: this.assignment.project_password,
+                input_mode: this.assignment.input_mode
             };
         },
 

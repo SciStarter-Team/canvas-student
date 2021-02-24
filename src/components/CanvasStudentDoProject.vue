@@ -21,7 +21,7 @@
   <template v-else>
     <!-- project hosted on SciStarter e.g. Stream Selfie, Project Squirrel -->
     <template v-if="project.project.form && project.project.type == 'Project'">
-      <Worksheet :user="user" :worksheet="worksheet" :project="project" v-on="$listeners" />
+      <Worksheet :user="user" :worksheet="worksheet" :project="project" @afterSaved="worksheet_saved" v-on="$listeners" />
     </template>
 
 
@@ -34,7 +34,7 @@
 
         <div class="m-b4-0 p-b2-0" style="border-top:2px solid #9f9f9f">
           <h2 class="color-p fs-base serif w-700 m-0-0-s4">Project Worksheet</h2>
-          <Worksheet :user="user" :worksheet="worksheet" :project="project" v-on="$listeners" />
+          <Worksheet :user="user" :worksheet="worksheet" :project="project" @afterSaved="worksheet_saved" v-on="$listeners" />
         </div>
       </template><!-- END Teacher submits data so student does not need to go to project? -->
 
@@ -44,7 +44,7 @@
           <h2 class="color-p fs-base serif w-700 m-0-0-s4">Instructions</h2>
           <ol class="instructions">
             <li>After you’ve read about the project and reviewed the instructions on this page, click the orange button below to visit the project’s website. This site will open in a new tab.</li>
-            <li>On the project’s website, use the username and password provided by your teacher to log in.</li>
+            <li>On the project’s website, use the login name <strong>{{assignment_settings.project_username}}</strong> and password <strong>{{assignment_settings.project_password}}</strong> to log in.</li>
             <li>Following instructions on the project’s website, you will add observations to help scientists answer questions they can’t answer without you!</li>
             <li v-if="project.reflections">Return to this page and complete the reflection questions, below. Your teacher will be notified when you’ve submitted your reflections.</li>
           </ol>
@@ -93,7 +93,7 @@
             </div>
 
             <div class="m-b4-0 p-b2-0" style="border-top:2px solid #9f9f9f">
-              <Worksheet :user="user" :worksheet="worksheet" :project="project" v-on="$listeners" />
+              <Worksheet :user="user" :worksheet="worksheet" :project="project" @afterSaved="worksheet_saved" v-on="$listeners" />
             </div>
 
 
@@ -123,7 +123,7 @@
     <!-- Custom Project -->
     <template v-else-if="project.project.type == 'CustomProject'">
       <h2 class="color-p fs-base serif w-700 m-0-0-s4">Project Worksheet</h2>
-      <Worksheet :user="user" :worksheet="worksheet" :project="project" v-on="$listeners" />
+      <Worksheet :user="user" :worksheet="worksheet" :project="project" @afterSaved="worksheet_saved" v-on="$listeners" />
     </template>
 
     <template v-if="project.reflections">
@@ -132,9 +132,20 @@
         You have already submitted your reflection questions. If you'd
         like to revise your answers or resubmit, you may do so below.
       </p>
-      <Worksheet @worksheetCompleted="submitted_reflections = true" :user="user" :worksheet="project.reflections.fields" :project="project" :is_reflections="true" />
+      <Worksheet @afterSaved="reflections_saved" :user="user" :worksheet="project.reflections.fields" :project="project" :is_reflections="true" />
     </template>
   </template>
+
+  <el-dialog
+    title="Thank you"
+    :visible.sync="show_reflections_thanks"
+    width="400px">
+    <span style="word-break: break-word">Thank you for answering the reflection questions. Now, you can either revise your answers, or go on to the next step.</span>
+    <span slot="footer" class="dialog-footer">
+      <a @click="show_reflections_thanks = false">Revise my reflections</a>
+      <a style="margin-left: 1rem" class="cbtn-primary" @click="go_thanks">Go</a>
+    </span>
+  </el-dialog>
 </div>
 </template>
 
@@ -155,6 +166,7 @@ export default {
                 contributions: 1,
             }, // set assignment stuff
             submitted_reflections: false,
+            show_reflections_thanks: false
         }
     },
     computed: {
@@ -175,6 +187,21 @@ export default {
         }
     },
     methods: {
+        worksheet_saved: function() {
+
+        },
+
+        reflections_saved: function() {
+            this.submitted_reflections = true;
+            this.$emit('setCompleted');
+            this.show_reflections_thanks = true;
+        },
+
+        go_thanks: function() {
+            this.show_reflections_thanks = false;
+            this.$emit('goThankyou');
+        },
+
         createAccount: function() {
             var ctx = this;
 
@@ -220,18 +247,21 @@ export default {
     border-radius: 8px;
     border: 4px solid #47A8D4;
     box-shadow: 2px 0 6px rgba(0,0,0,.5);
-    label {
-        margin-top: 0.25em;
-        display: block;
-    }
-    input {
-        width: 100%;
-        display: block;
-        border: 1px solid #efefef;
-        padding: .4rem;
-    }
+}
+label {
+    margin-top: 0.25em;
+    display: block;
+}
+input {
+    width: 100%;
+    display: block;
+    border: 1px solid #efefef;
+    padding: .4rem;
 }
 .cbtn-primary > i {
     vertical-align: middle;
+}
+strong {
+    font-size: large;
 }
 </style>

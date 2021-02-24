@@ -45,7 +45,7 @@
 
       <div id="panel-3" class="canvas-panel"  v-if="tabIndex === 2" role="tabpanel" tabindex="0" aria-labelledby="tab-3">
         <keep-alive>
-        <StudentDoProject :project="project" :user="user" :organization="organization" :assignment_settings="assignment_settings"  :direct="direct" v-on="$listeners" />
+        <StudentDoProject :project="project" :user="user" :organization="organization" :assignment_settings="assignment_settings"  :direct="direct" @goThankyou="selectTab(0)" v-on="$listeners" />
       </keep-alive>
       </div>
 

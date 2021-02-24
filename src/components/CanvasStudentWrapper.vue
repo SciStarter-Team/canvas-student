@@ -1,7 +1,7 @@
 <template>
   <div class="student-assign student content-wrapper">
 
-      <StudentAssignmentTabs :completed="completed" :project="project" :user="user" :direct="direct" :organization="organization" :assignment_settings="assignment_settings" :assignment="assignment" @worksheetCompleted="showThankYou" />
+      <StudentAssignmentTabs :completed="completed" :project="project" :user="user" :direct="direct" :organization="organization" @setCompleted="completed=true" :assignment_settings="assignment_settings" :assignment="assignment" @worksheetCompleted="showThankYou" />
 
   </div>
 </template>

@@ -278,8 +278,8 @@ export default {
                 body: JSON.stringify(ctx.answered)
             }).then(response => response.text()).then(function() {
                 ctx.$refs.submit_spinner.classList.remove("spinner-border", "spinner-border-sm");
+                ctx.$emit('afterSaved');
                 ctx.$emit('worksheetCompleted');
-                alert("Your answers have been saved.");
             });
         },
 
