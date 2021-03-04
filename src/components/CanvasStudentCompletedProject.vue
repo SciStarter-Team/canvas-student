@@ -13,6 +13,15 @@
       </div>
     </div>
   </template>
+  <template v-else>
+    <div class="project-video m-0-0-lg">
+      <div class="videoWrapper" style="height:auto">
+        <video controls class="videoWrapper__video" preload="auto">
+          <source type="video/mp4" src="https://orrery-media.s3-us-west-2.amazonaws.com/curated/broward_thank+you.mp4">
+        </video>
+      </div>
+    </div>
+  </template>
 
   <div v-if="project.project.type == 'Project'" v-html="project.thanks" class="m-0-0-lg"></div>
   <p v-else-if="user.external_view">Thank you for contributing to {{project.project.name}}!</p>

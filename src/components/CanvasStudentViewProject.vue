@@ -66,7 +66,11 @@
                 <th scope="row">Type of Activity</th>
                 <td>{{activities}}</td>
               </tr>
-              <tr v-if="project.project.classroom_materials">
+              <tr v-if="project.classroom_materials_link">
+                <th scope="row">Classroom materials</th>
+                <td><a :href="project.classroom_materials_link" target="_blank">{{ project.classroom_materials_label || project.classroom_materials_link }}</a></td>
+              </tr>
+              <tr v-else-if="project.project.classroom_materials">
                 <th scope="row">Classroom materials</th>
                 <td><a :href="project.project.classroom_materials" target="_blank">{{ project.project.classroom_materials }}</a></td>
               </tr>
@@ -109,7 +113,7 @@
 
       </div>
 
-      <p>
+      <p style="margin-top: 1rem">
         <a @click="triggerDoProjectTab" class="cbtn-primary"><span v-if="assignment_settings.input_mode=='worksheet'">Go to Worksheet</span><span v-else>Do the Project</span></a>
       </p>
 
