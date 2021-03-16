@@ -65,7 +65,9 @@
       <div v-else-if="item.type==='select-one'">
         <template v-if="!is_submission">
           <el-select v-model="answers[i]" placeholder="Select an answer">
-            <el-option v-for="o in item.options" :key="o" :label="o" :value="o"></el-option>
+            <template v-for="o in item.options">
+              <el-option v-if="o.trim()" :key="o" :label="o" :value="o"></el-option>
+            </template>
           </el-select>
         </template>
         <template v-else>
@@ -132,7 +134,9 @@
       <!-- ***** CUSTOM FORM RADIOS ***********-->
       <div v-else-if="item.fieldType==='radio'">
         <el-radio-group v-model="answers[i]">
-          <el-radio v-for="o in item.options" :label="o" :key="o + i">{{o}}</el-radio>
+          <template v-for="o in item.options">
+            <el-radio v-if="o.trim()" :label="o" :key="o + i">{{o}}</el-radio>
+          </template>
         </el-radio-group>
       </div>
 
@@ -146,7 +150,9 @@
       <div v-else-if="item.fieldType === 'checkbox' || item.type==='select-many'">
         <template v-if="!is_submission">
           <el-checkbox-group v-model="answers[i]">
-            <el-checkbox v-for="c in item.options" :key="c + i" :label="c"></el-checkbox>
+            <template v-for="c in item.options">
+              <el-checkbox v-if="c.trim()" :key="c + i" :label="c"></el-checkbox>
+            </template>
           </el-checkbox-group>
         </template>
         <template v-else>

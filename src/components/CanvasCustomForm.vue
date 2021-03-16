@@ -7,14 +7,18 @@
         <!-- ******* RADIOS ************ -->
         <div v-if="item.fieldType==='radio'">
           <el-radio-group>
-            <el-radio v-for="o in item.options" :label="o" :key="o + i">{{o}}</el-radio>
+            <template v-for="o in item.options">
+              <el-radio v-if="o.trim()" :label="o" :key="o + i">{{o}}</el-radio>
+            </template>
           </el-radio-group>
         </div>
 
         <!-- ******* CHECKBOXES ************ -->
         <!-- I don't understand why element checkboxes aren't working here -->
         <div v-else-if="item.fieldType === 'checkbox'">
-            <label class="d-block" v-for="c in item.options" :key="c"><input type="checkbox" /> {{c}}</label>
+          <template v-for="c in item.options">
+            <label v-if="c.trim()" class="d-block" :key="c"><input type="checkbox" /> {{c}}</label>
+          </template>
         </div>
 
         <!-- ******* TEXTFIELDS ************ -->
