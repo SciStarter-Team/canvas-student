@@ -150,11 +150,21 @@
       </div><!-- end .flex -->
 
       <div class="frame p-base m-0-basehalf">
-        <h3 class="color-p fs-base serif w-700 m-0-0-s4">Project Instructions</h3>
+        <h3 class="color-p fs-base serif w-700 m-0-0-s4">Student Instructions</h3>
 
         <ol class="instructions">
           <template v-for="(step, idx) in project.steps">
-            <li v-if="check_condition(step.condition)" v-html="step.text" :key="idx"></li>
+            <li v-if="check_condition(step.condition) && (step.condition & 1)" v-html="step.text" :key="idx"></li>
+          </template>
+        </ol>
+      </div>
+
+      <div class="frame p-base m-0-basehalf">
+        <h3 class="color-p fs-base serif w-700 m-0-0-s4">Teacher Instructions</h3>
+
+        <ol class="instructions">
+          <template v-for="(step, idx) in project.steps">
+            <li v-if="check_condition(step.condition) && (step.condition & 2)" v-html="step.text" :key="idx"></li>
           </template>
         </ol>
       </div>
