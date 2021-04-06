@@ -154,7 +154,7 @@
 
         <ol class="instructions">
           <template v-for="(step, idx) in project.steps">
-            <li v-if="check_condition(step.condition) && (step.condition & 1)" v-html="step.text" :key="idx"></li>
+            <li v-if="check_condition(1, step.condition)" v-html="step.text" :key="idx"></li>
           </template>
         </ol>
       </div>
@@ -164,7 +164,7 @@
 
         <ol class="instructions">
           <template v-for="(step, idx) in project.steps">
-            <li v-if="check_condition(step.condition) && (step.condition & 2)" v-html="step.text" :key="idx"></li>
+            <li v-if="check_condition(2, step.condition)" v-html="step.text" :key="idx"></li>
           </template>
         </ol>
       </div>
@@ -242,8 +242,9 @@ export default {
         }
     },
     methods: {
-        check_condition(condition) {
-            return ((condition & this.satisfies) == condition);
+        check_condition(constraint, condition) {
+            var sat = constraint | this.satisfies;
+            return ((condition & sat) == condition);
         },
 
         scrollToTop() {
@@ -274,7 +275,16 @@ export default {
     },
     computed: {
         satisfies() {
-            return 0x11;
+            var ret = 0;
+
+            if(this.direct) {
+                ret |= 0x10;
+            }
+            else {
+                ret |= 0x08;
+            }
+
+            return ret;
         },
 
         intro_videos() {

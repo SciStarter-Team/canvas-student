@@ -82,7 +82,7 @@ export default {
         },
 
         direct_input() {
-            return this.assignment.direct_input;
+            return this.assignment.direct_input || this.assignment.input_mode == 'delegated';
         },
 
         organization() {
