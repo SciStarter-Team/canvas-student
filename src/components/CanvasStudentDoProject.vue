@@ -44,8 +44,8 @@
           <h2 class="color-p fs-base serif w-700 m-0-0-s4">Instructions</h2>
           <ol class="instructions">
             <li>After you’ve read about the project and reviewed the instructions on this page, click the orange button below to visit the project’s website. This site will open in a new tab.</li>
-            <li>On the project’s website, use the login name <strong>{{assignment_settings.project_username}}</strong> and password <strong>{{assignment_settings.project_password}}</strong> to log in.</li>
-            <li>Following instructions on the project’s website, you will add observations to help scientists answer questions they can’t answer without you!</li>
+            <li v-if="!project.project_account_instructions">On the project’s website, use the login name <strong>{{assignment_settings.project_username}}</strong> and password <strong>{{assignment_settings.project_password}}</strong> to log in.</li>
+            <li>Following your teacher's directions and the instructions on the project’s website, you will add observations to help scientists answer questions they can’t answer without you!</li>
             <li v-if="project.reflections">Return to this page and complete the reflection questions, below. Your teacher will be notified when you’ve submitted your reflections.</li>
           </ol>
           <p class="fs-b1 m-base-0-b4"><a class="cbtn-primary" target="_blank" :href="project.project.url"><b>{{project.project.name}} website &raquo;</b></a></p>
