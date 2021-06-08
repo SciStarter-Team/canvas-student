@@ -20,13 +20,14 @@
   </template>
   <template v-else>
     <!-- project hosted on SciStarter e.g. Stream Selfie, Project Squirrel -->
-    <template v-if="project.project.form && project.project.type == 'Project'">
-      <Worksheet :user="user" :worksheet="worksheet" :project="project" @afterSaved="worksheet_saved" v-on="$listeners" />
-    </template>
+    <!-- <template v-if="project.project.form && project.project.type == 'Project'"> -->
+    <!--   <Worksheet :user="user" :worksheet="project.project.form" :project="project" @afterSaved="worksheet_saved" v-on="$listeners" /> -->
+    <!-- </template> -->
 
 
     <!-- project NOT hosted on SciStarter e.g. Stall Catchers -->
-    <template v-else-if="!project.project.form  && project.project.type == 'Project'">
+    <!-- <template v-else-if="!project.project.form  && project.project.type == 'Project'"> -->
+    <template v-if="project.project.type == 'Project'">
 
       <!-- Teacher submits data so student does not need to go to project? -->
       <template v-if="assignment_settings.submitted_by === 'teacher'">
@@ -87,12 +88,12 @@
                   <p class="fs-b1 m-base-0-b4"><a class="cbtn-primary" target="_blank" :href="project.project.url"><b>{{project.project.name}} website &raquo;</b></a></p>
                 </li>
                 <li v-else>Participate in the project.</li>
-                <li>Come back to this page and fill out the worksheet below.</li>
+                <li v-if="worksheet">Come back to this page and fill out the worksheet below.</li>
                 <li v-if="project.reflections">Fill out the reflection questions below.</li>
               </ol>
             </div>
 
-            <div class="m-b4-0 p-b2-0" style="border-top:2px solid #9f9f9f">
+            <div v-if="worksheet" class="m-b4-0 p-b2-0" style="border-top:2px solid #9f9f9f">
               <Worksheet :user="user" :worksheet="worksheet" :project="project" @afterSaved="worksheet_saved" v-on="$listeners" />
             </div>
 

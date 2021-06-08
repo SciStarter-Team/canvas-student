@@ -53,6 +53,10 @@
           <div class="frame p-base">
             <h3 class="color-p fs-base serif w-700 m-0-0-s4">Project Details</h3>
             <table class="canvas-table">
+              <tr v-if="project.project.question">
+                <th scope="row">At a glance</th>
+                <td>{{project.project.question}}</td>
+              </tr>
               <tr v-if="project.project.outdoors || project.project.indoors || project.project.location_type == 'ON'">
                 <th scope="row">Spend the time</th>
                 <td v-if="project.project.location_type == 'ON'">Online</td>
@@ -122,7 +126,7 @@
           <div class="frame p-base div2">
             <h3 class="color-p fs-base serif w-700 m-0-0-s4">Materials Needed</h3>
 
-            <div class="content-slot" v-html="project.materials"></div>
+            <div class="content-slot" v-html="project.materials || project.project.materials"></div>
           </div>
 
           <!-- IF AFFILIATE WHERE STUDENT HAS TO ENTER DATA -->
@@ -149,25 +153,34 @@
 
       </div><!-- end .flex -->
 
-      <div class="frame p-base m-0-basehalf">
-        <h3 class="color-p fs-base serif w-700 m-0-0-s4">Student Instructions</h3>
+      <template v-if="project.project.type == 'Propject'">
+        <div class="frame p-base m-0-basehalf">
+          <h3 class="color-p fs-base serif w-700 m-0-0-s4">Student Instructions</h3>
 
-        <ol class="instructions">
-          <template v-for="(step, idx) in project.steps">
-            <li v-if="check_condition(1, step.condition)" v-html="step.text" :key="idx"></li>
-          </template>
-        </ol>
-      </div>
+          <ol class="instructions">
+            <template v-for="(step, idx) in project.steps">
+              <li v-if="check_condition(1, step.condition)" v-html="step.text" :key="idx"></li>
+            </template>
+          </ol>
+        </div>
 
-      <div class="frame p-base m-0-basehalf">
-        <h3 class="color-p fs-base serif w-700 m-0-0-s4">Teacher Instructions</h3>
+        <div class="frame p-base m-0-basehalf">
+          <h3 class="color-p fs-base serif w-700 m-0-0-s4">Teacher Instructions</h3>
 
-        <ol class="instructions">
-          <template v-for="(step, idx) in project.steps">
-            <li v-if="check_condition(2, step.condition)" v-html="step.text" :key="idx"></li>
-          </template>
-        </ol>
-      </div>
+          <ol class="instructions">
+            <template v-for="(step, idx) in project.steps">
+              <li v-if="check_condition(2, step.condition)" v-html="step.text" :key="idx"></li>
+            </template>
+          </ol>
+        </div>
+      </template>
+      <template v-else-if="project.project.steps">
+        <div class="frame p-base m-0-basehalf">
+          <h3 class="color-p fs-base serif w-700 m-0-0-s4">Instructions</h3>
+
+          <vue-markdown :source="project.project.steps"></vue-markdown>
+        </div>
+      </template>
 
       <template v-if="project.project.type == 'CustomProject' && project.project.notes">
         <div class="frame p-base m-base-basehalf">
