@@ -153,7 +153,7 @@
 
       </div><!-- end .flex -->
 
-      <template v-if="project.project.type == 'Propject'">
+      <template v-if="project.project.type == 'Project'">
         <div class="frame p-base m-0-basehalf">
           <h3 class="color-p fs-base serif w-700 m-0-0-s4">Student Instructions</h3>
 
