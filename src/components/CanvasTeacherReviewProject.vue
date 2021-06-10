@@ -57,6 +57,10 @@
                 <th scope="row">At a glance</th>
                 <td>{{project.project.question}}</td>
               </tr>
+              <tr v-if="project.project.goal">
+                <th scope="row">Project Goal</th>
+                <td>{{project.project.goal}}</td>
+              </tr>
               <tr v-if="project.project.outdoors || project.project.indoors || project.project.location_type == 'ON'">
                 <th scope="row">Spend the time</th>
                 <td v-if="project.project.location_type == 'ON'">Online</td>

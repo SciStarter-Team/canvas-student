@@ -51,6 +51,10 @@
           <div class="frame p-base">
             <h3 class="color-p fs-base serif w-700 m-0-0-s4">Project Details</h3>
             <table class="canvas-table">
+              <tr v-if="project.project.goal">
+                <th scope="row">Project Goal</th>
+                <td>{{project.project.goal}}</td>
+              </tr>
               <tr v-if="project.project.outdoors || project.project.indoors || project.project.location_type == 'ON'">
                 <th scope="row">Spend the time</th>
                 <td v-if="project.project.location_type == 'ON'">Online</td>

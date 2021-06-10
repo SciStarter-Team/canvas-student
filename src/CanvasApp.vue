@@ -191,6 +191,8 @@ export default {
 
             ctx.$refs.join_spinner.classList.add("spinner-border", "spinner-border-sm");
 
+            // The create_account field holds the set password
+            // endpoint if the account has alreadybeen created.
             fetch(ctx.user.create_account, {
                 method: "POST",
                 credentials: "include",
